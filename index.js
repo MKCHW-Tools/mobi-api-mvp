@@ -6,6 +6,8 @@ require('./db/db')
 const PORT = process.env.PORT || 4000
 
 const app = express()
+app.use(express.json())
+
 const userRouter = require('./routes/users')
 
 app.get('/', (req, res) => {
