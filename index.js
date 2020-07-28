@@ -9,9 +9,10 @@ const app = express()
 app.use(express.json())
 
 const userRouter = require('./routes/users')
+const expenseRouter = require('./routes/expenses')
 
 app.get('/', (req, res) => {
-  res.send(`Oooops!! ${process.env.JWT_KEY}`)
+  res.send(`Oooops!! Nothing here.`)
 })
 
 app.listen(PORT, () => {
