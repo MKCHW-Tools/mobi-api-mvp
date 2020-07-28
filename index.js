@@ -12,6 +12,7 @@ const app = express()
 app.use(express.json())
 
 app.use(userRouter)
+app.use(expenseRouter)
 
 app.get('/', (req, res) => {
   res.send(`Oooops!! Nothing here.`)
