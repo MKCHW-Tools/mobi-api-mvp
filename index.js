@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4000
 const app = express()
 
 app.get('/', (req, res) => {
-  res.send(`Oooops!! ${process.env.JWT_KEY}`)
+  res.send(`Oooops!!`)
 })
 
 app.listen(PORT, () => {
