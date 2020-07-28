@@ -13,5 +13,4 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`MobiKlinic app api ${PORT}`)
-  
-});
+})
