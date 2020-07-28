@@ -1,0 +1,14 @@
+
+const express = require('express')
+
+const PORT = process.env.PORT || 4000
+
+const app = express()
+
+app.get('/', (req, res) => {
+  res.send('Oooops!!')
+})
+
+app.listen(PORT, () => {
+  console.log(`MobiKlinic app api ${PORT}`)
+});
