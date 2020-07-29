@@ -1,0 +1,10 @@
+POST https://mobi-app-api.herokuapp.com/users
+
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "David",
+    "email": "sam@gmail.com",
+    "password": "openly easy"
+}
