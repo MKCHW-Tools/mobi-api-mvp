@@ -15,16 +15,31 @@ router.post('/users', async function(req, res) {
     }
 })
 
-router.post('/users/login', async function(req, res){
+router.post('/users/login', async function(req, res) {
+
     try {
-        const { email, password } = req.body
-        const user = await User.findByCredentials(email, password)
         
-        if (!user) {
-            return res.status(401).send({error: 'Login failed! Check credentials'})
+        const {phone, username, email, password} = req.body
+        
+        // if( !phone || !username || !email || !password) {
+        //     return res.status(401).send({
+        //         "result": "failure",
+        //         "msg": "Some of the required fields are missing"
+        //     })
+        // }
+
+        const user =  await User.findByCredentials(phone, email, username, password)
+
+        if (!user || user.length <= 0) {
+            res.status(401).send({
+                "result": "failure",
+                "msg": "Login failed"
+            })
+        } else {
+            const token = await user.generateAuthToken()
+            res.send({user, token})
         }
-        const token = await user.generateAuthToken()
-        res.send({ user, token })
+
     } catch (error) {
         res.status(400).send(error)
     }

@@ -1,5 +1,5 @@
 const express = require('express')
-const Expense = require('../models/expense')
+const Expense = require('../models/diagnose')
 const auth = require('../middleware/auth')
 
 const router = express.Router()
