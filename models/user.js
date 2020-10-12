@@ -94,6 +94,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
     console.log(password)
     console.log(user.password)
+    console.log(isPasswordMatch)
     if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
     return user
