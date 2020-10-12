@@ -73,15 +73,16 @@ userSchema.methods.generateAuthToken = async function(){
     return token
 }
 
-userSchema.statics.findByCredentials = async function(phone, email, username, password) {
+userSchema.statics.findByCredentials = async function(phone = '', email = '', username = '', password = '') {
 
     //let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
     let user
-    if(typeof email !=='undefined' && email.length > 5)
+
+    if( email != '' )
         user = await User.findOne({email:{$eq:email}})
-    else if(typeof phone !=='undefined' && phone.length > 9)
+    else if( phone != '' )
         user = await User.findOne({phone:{$eq:phone}})
-    else if(typeof username !=='undefined' && username.length > 5 ) 
+    else if(typeof username != '' )
         user = await User.findOne({username: {$eq:username}})
 
     if ( !user ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
