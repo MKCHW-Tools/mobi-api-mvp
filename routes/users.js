@@ -28,15 +28,16 @@ router.post('/users/login', async function(req, res) {
         //     })
         // }
 
-        console.log( req.body)
+        console.log( req.body )
 
         const user =  await User.findByCredentials(phone, email, username, password)
-        
+
         console.log( user )
 
-        if (!user || user.length <= 0) {
+        if ( !user || user.length <= 0 ) {
+
             res.status(401).send({
-                "result": "failure",
+                "result": "Failure",
                 "msg": "Login failed"
             })
 
