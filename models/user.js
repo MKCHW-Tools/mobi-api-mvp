@@ -79,15 +79,15 @@ userSchema.statics.findByCredentials = async function(phone = '', email = '', us
     let user
 
     if( email != '' )
-        user = await User.findOne({email:{$eq:email}})
+        user = await User.findOne({email: {$eq: email}})
     else if( phone != '' )
-        user = await User.findOne({phone:{$eq:phone}})
+        user = await User.findOne({phone: {$eq: phone}} )
     else if(typeof username != '' )
-        user = await User.findOne({username: {$eq:username}})
+        user = await User.findOne({username: {$eq: username}})
 
     console.log(user)
-    
-    if ( !user ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
+
+    if ( !user || user == null ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
 
