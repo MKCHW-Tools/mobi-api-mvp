@@ -47,7 +47,7 @@ router.post('/users/login', async function(req, res) {
         }
 
     } catch (error) {
-        //console.log(error)
+        console.log(error)
         res.status(400).send({
             'result':'Failure',
             'details': error
