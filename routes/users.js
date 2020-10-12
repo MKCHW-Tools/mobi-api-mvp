@@ -42,19 +42,23 @@ router.post('/users/login', async function(req, res) {
             })
 
         } else {
-            //const token = await User.generateAuthToken()
+
+            const loggedIn = new User(user)
+            const token = await loggedIn.generateAuthToken()
+
             res.send({
                 'result':'Success',
-                'user': user
+                'user': loggedIn,
+                'token': token
             })
         }
 
     } catch (error) {
-        console.log(error)
         res.status(400).send({
             'result':'Failure',
-            'details': error
+            'msg': 'Techinical error, check console'
         })
+        console.log(error)
     }
 })
 
@@ -62,6 +66,7 @@ router.get('/users/profile', auth, async (req, res) => {
 
     res.send(req.user)
 })
+
 router.get('/users', async (req, res) => {
 
     res.send([
