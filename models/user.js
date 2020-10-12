@@ -89,6 +89,8 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
         user = await User.find({username: username})
         console.log( 'Username: ', username)
 
+    } else {
+        user = await User.find({})
     }
 
     if ( !user || user == null ) throw new Error( `User not found ${phone}, ${email}, ${username}` )
