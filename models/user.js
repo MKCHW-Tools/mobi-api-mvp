@@ -30,9 +30,7 @@ const userSchema = mongoose.Schema({
         unique: true,
         lowercase: true,
         validate: value => {
-            if (!validator.isEmail(value)) {
-                throw new Error({error: 'Invalid Email address'})
-            }
+            if (!validator.isEmail(value)) throw new Error(`Invalid Email address`)
         }
     },
     phone: {
@@ -66,38 +64,40 @@ userSchema.pre('save', async function(next){
 })
 
 userSchema.methods.generateAuthToken = async function(){
+
     const user = this
     const token = jwt.sign({_id: user._id }, process.env.JWT_KEY)
     user.tokens = user.tokens.concat({ token })
     await user.save()
+
     return token
 }
 
-userSchema.statics.findByCredentials = async function(phone = '', email = '', username = '', password = '') {
+userSchema.statics.findByCredentials = async function( phone = '', email = '', username = '', password = '' ) {
 
     let user
 
     if( email != '' ) {
-        user = await User.find({email: {$eq: email}})
-        console.log('email: ', email)
+        user = await User.find({email: email})
+        console.log('Email: ', email)
 
     } else if( phone != '' ) {
-        user = await User.find({phone: {$eq: phone}})
-        console.log('phone: ', phone)
+        user = await User.find({phone: phone})
+        console.log('Phone: ', phone)
 
     } else if( username != '' ) {
-        user = await User.find({username: {$eq: username}})
-        console.log( 'username: ', username)
+        user = await User.find({username: username})
+        console.log( 'Username: ', username)
 
     }
 
-    if ( !user || user == null ) throw new Error( `User not found ${phone}, ${email}, ${username}`)
+    if ( !user || user == null ) throw new Error( `User not found ${phone}, ${email}, ${username}` )
 
     console.log(user)
-    
-    const isPasswordMatch = await bcrypt.compare(password, user.password)
 
-    if ( !isPasswordMatch ) throw new Error({error: 'Invalid login credentials' })
+    const isPasswordMatch = await bcrypt.compare( password, user.password )
+
+    if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
     return user
 }
