@@ -28,6 +28,8 @@ router.post('/users/login', async function(req, res) {
         //     })
         // }
 
+        console.log( req.body)
+
         const user =  await User.findByCredentials(phone, email, username, password)
 
         if (!user || user.length <= 0) {
