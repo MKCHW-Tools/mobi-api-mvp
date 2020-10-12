@@ -77,11 +77,11 @@ userSchema.statics.findByCredentials = async function(phone, email, username, pa
 
     //let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
     let user
-    if(email.length > 5)
+    if(typeof email !=='undefined' && email.length > 5)
         user = await User.findOne({email:{$eq:email}})
-    else if(phone.length > 9)
+    else if(typeof phone !=='undefined' && phone.length > 9)
         user = await User.findOne({phone:{$eq:phone}})
-    else if(username.length > 5 ) 
+    else if(typeof username !=='undefined' && username.length > 5 ) 
         user = await User.findOne({username: {$eq:username}})
 
     if ( !user ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
