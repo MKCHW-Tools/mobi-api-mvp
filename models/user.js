@@ -76,21 +76,15 @@ userSchema.methods.generateAuthToken = async function(){
 userSchema.statics.findByCredentials = async function(phone, email, username, password) {
 
     //let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
+    let user
+    if(email && email.length > 5)
+        user = await User.findOne({email:{$eq:email}})
+    else if(phone)
+        user = await User.findOne({phone:{$eq:phone}})
+    else if(username && username.length > 5 ) 
+        user = await User.findOne({username})
 
-    let user = await User.findOne({email:{$eq:email}})
-
-    if (!user) {
-        user = await User.findOne({phone})
-        //user = await User.find({$and: [{'phone': {$exists: false}}, {"phone": phone}]})
-
-        if(!user) {
-            user = await User.findOne({username})
-            //user = await User.find({$and: [{'username': {$exists: false}}, {"username": username}]})
-            if(!user) {
-                return []
-            }
-        }
-    }
+    if (!user) return []
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
 
