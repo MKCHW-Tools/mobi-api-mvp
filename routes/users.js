@@ -31,12 +31,15 @@ router.post('/users/login', async function(req, res) {
         console.log( req.body)
 
         const user =  await User.findByCredentials(phone, email, username, password)
+        
+        console.log( user )
 
         if (!user || user.length <= 0) {
             res.status(401).send({
                 "result": "failure",
                 "msg": "Login failed"
             })
+
         } else {
             const token = await user.generateAuthToken()
             res.send({user, token})
