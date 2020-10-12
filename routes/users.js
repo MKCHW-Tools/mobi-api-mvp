@@ -16,41 +16,38 @@ router.post('/users', async function(req, res) {
 })
 
 router.post('/users/login', async function(req, res) {
+    
+    const {phone, username, email, password} = req.body
 
     try {
-        
-        const {phone, username, email, password} = req.body
-        
-        // if( !phone || !username || !email || !password) {
-        //     return res.status(401).send({
-        //         "result": "failure",
-        //         "msg": "Some of the required fields are missing"
-        //     })
-        // }
-
-        // console.log( req.body )
-
-        const user =  await User.findByCredentials(phone, email, username, password)
-
-        console.log( user )
-
-        if ( !user || user.length <= 0 ) {
-
+                
+        if( !phone && !username && !email || !password) {
             res.status(401).send({
                 "result": "Failure",
-                "msg": "Login failed"
+                "msg": "Email or Phone or Username and password are required!"
             })
 
         } else {
+            const user =  await User.findByCredentials(phone, email, username, password)
 
-            const loggedIn = new User(user)
-            const token = await loggedIn.generateAuthToken()
-
-            res.send({
-                'result':'Success',
-                'user': loggedIn,
-                'token': token
-            })
+            if ( !user || user.length <= 0 ) {
+    
+                res.status(401).send({
+                    "result": "Failure",
+                    "msg": "Wrong login details"
+                })
+    
+            } else {
+    
+                const loggedIn = new User(user)
+                const token = await loggedIn.generateAuthToken()
+    
+                res.send({
+                    'result':'Success',
+                    'user': loggedIn,
+                    'token': token
+                })
+            }
         }
 
     } catch (error) {
