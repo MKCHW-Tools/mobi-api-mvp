@@ -94,7 +94,7 @@ userSchema.statics.findByCredentials = async function(phone = '', email = '', us
 
     //throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
 
-    if ( !user || user == null ) throw new Error({'error': `User not found ${phone}, ${email}, ${username}` })
+    if ( !user || user == null ) throw new Error(`User not found ${phone}, ${email}, ${username}`)
     //return ({'error':'failure'})
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
