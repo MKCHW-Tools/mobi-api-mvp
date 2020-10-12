@@ -75,17 +75,17 @@ userSchema.methods.generateAuthToken = async function(){
 
 userSchema.statics.findByCredentials = async function(phone, email, username, password) {
 
-    let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
+    //let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
 
-    //let user = await User.findOne({email:{$eq:email}})
+    let user = await User.findOne({email:{$eq:email}})
 
     if (!user) {
-        //user = await User.findOne({phone})
-        user = await User.find({$and: [{'phone': {$exists: false}}, {"phone": phone}]})
+        user = await User.findOne({phone})
+        //user = await User.find({$and: [{'phone': {$exists: false}}, {"phone": phone}]})
 
         if(!user) {
-            //user = await User.findOne({username})
-            user = await User.find({$and: [{'username': {$exists: false}}, {"username": username}]})
+            user = await User.findOne({username})
+            //user = await User.find({$and: [{'username': {$exists: false}}, {"username": username}]})
             if(!user) {
                 return []
             }
