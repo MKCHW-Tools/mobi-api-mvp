@@ -92,6 +92,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
     const isPasswordMatch = await bcrypt.compare( password, user.password )
 
+    console.log(user)
     if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
     return user

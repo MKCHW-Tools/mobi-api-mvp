@@ -42,7 +42,7 @@ router.post('/users/login', async function(req, res) {
                 const loggedIn = new User(user)
                 const token = await loggedIn.generateAuthToken()
     
-                res.send({
+                res.status(200).send({
                     'result':'Success',
                     'user': loggedIn,
                     'token': token
