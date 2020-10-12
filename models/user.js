@@ -84,13 +84,11 @@ userSchema.statics.findByCredentials = async function(phone, email, username, pa
     else if(username.length > 5 ) 
         user = await User.findOne({username: {$eq:username}})
 
-    if (!user) return []
+    if ( !user ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
 
-    if (!isPasswordMatch) {
-        throw new Error({error: 'Invalid login credentials' })
-    }
+    if ( !isPasswordMatch ) throw new Error({error: 'Invalid login credentials' })
 
     return user
 }
