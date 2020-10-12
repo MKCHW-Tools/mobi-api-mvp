@@ -42,8 +42,11 @@ router.post('/users/login', async function(req, res) {
             })
 
         } else {
-            const token = await User.generateAuthToken()
-            res.send({user, token})
+            //const token = await User.generateAuthToken()
+            res.send({
+                'result':'Success',
+                'user': user
+            })
         }
 
     } catch (error) {
