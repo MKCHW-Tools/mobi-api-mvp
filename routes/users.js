@@ -42,13 +42,16 @@ router.post('/users/login', async function(req, res) {
             })
 
         } else {
-            const token = await user.generateAuthToken()
+            const token = await User.generateAuthToken()
             res.send({user, token})
         }
 
     } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
+        //console.log(error)
+        res.status(400).send({
+            'result':'Failure',
+            'details': error
+        })
     }
 })
 
