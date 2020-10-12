@@ -78,14 +78,16 @@ userSchema.statics.findByCredentials = async function(phone = '', email = '', us
     //let user = await User.find({$and: [{'email': {$exists: false}}, {"email": email}]})
     let user
 
-    if( email != '' )
+    if( email != '' ) {
         user = await User.findOne({email: {$eq: email}})
-    else if( phone != '' )
+        console.log(email)
+    } else if( phone != '' ) {
         user = await User.findOne({phone: {$eq: phone}} )
-    else if(typeof username != '' )
+        console.log(phone)
+    } else if( username != '' ) {
         user = await User.findOne({username: {$eq: username}})
-
-    console.log(user)
+        console.log(username)
+    }
 
     if ( !user || user == null ) throw new Error({error: `User not found ${phone}, ${email}, ${username}` })
 
