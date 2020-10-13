@@ -113,7 +113,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
 userSchema.statics.deleteById = async function(id) {
 
-    return await User.findByIdAndRemove( id, ( err, user ) => {
+    const user = await User.findByIdAndRemove( id, ( err, user ) => {
 
         console.log(user)
         if( err ) return req.status(500).send( err )
