@@ -99,8 +99,8 @@ router.put('/users/:id', auth, async (req, res) => {
 
 router.delete('/users/delete/:id', auth, async (req, res) => {
     //console.log(req)
-    const user = req.params.id
-    console.log(req.user)
+    const id = req.params.id
+    console.log(id)
 })
 
 module.exports = router
