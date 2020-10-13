@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
 
     try {
         const user = await User.findOne({_id: data._id, 'tokens.token': token})
-        console.log(user)
+        //console.log(user)
         if (!user) {
             throw new Error()
         }
