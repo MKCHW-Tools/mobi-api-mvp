@@ -4,7 +4,7 @@ const User = require('../models/user')
 
 const auth = async (req, res, next) => {
 
-    const authorization = req.headers['authorization']
+    const {authorization} = req.headers
     const token = authorization && authorization.replace('Bearer ', '')
 
     const data = jwt.verify(token, process.env.JWT_KEY)
