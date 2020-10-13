@@ -50,17 +50,13 @@ const userSchema = mongoose.Schema({
     },
     roles: [
         {
-            role: {
-                type: String,
-                required: true
-            }
+            type: String,
+            required: true
         }
     ],
     capabilities: [
         {
-            capability: {
-                type: String,
-            }
+            type: String,
         }
     ],
     tokens: [
