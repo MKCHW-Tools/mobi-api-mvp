@@ -101,6 +101,7 @@ router.put('/users/:id', auth, async (req, res) => {
 })
 
 router.delete('/users/delete/:id', auth, async (req, res) => {
+    
     req.headers.authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Zjg1ZmZkYzFhMmE1ODAwMTc1MmM1NDYiLCJpYXQiOjE2MDI2MTgyMjksImV4cCI6MTYwMjYyMDAyOX0.sCfR9jeT3b4cwOgKznJIezxF5mmXrcpKC-nTmhjWrRg"
     const id = req.params.id
 
