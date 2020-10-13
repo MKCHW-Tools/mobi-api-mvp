@@ -105,7 +105,7 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
     const id = req.params.id
 
     if( !id ) {
-        return req.status(500).send({
+        return res.status(500).send({
             'result' : 'Failure',
             'msg' : 'Invalid resource'
         })
@@ -115,7 +115,7 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
     try {
         const user =  await User.delete( id )
 
-        req.status(200).send({
+        res.status(200).send({
             'result' : 'Success',
             'mgs' : 'Deleted successfully',
             'user' : user
