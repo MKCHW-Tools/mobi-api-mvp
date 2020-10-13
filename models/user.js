@@ -111,6 +111,20 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
     return user
 }
 
+userSchema.statics.deleteUser = async id => {
+
+    await User.findByIdAndRemove( id, ( err, user ) => {
+
+        if(err) return req.status(500).send(err)
+
+        return req.status(200).send({
+            'result' : 'Success',
+            'mgs' : 'Successfully deleted',
+            'user' : user
+        })
+    })
+}
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
