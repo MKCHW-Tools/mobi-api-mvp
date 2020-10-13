@@ -95,6 +95,8 @@ router.post('/users/logout-all', auth, async (req, res) => {
 })
 
 router.put('/users/:id', auth, async (req, res) => {
+    const id = req.params.id
+    const user =  await User.update( id, req.body )
 
 })
 
@@ -118,7 +120,7 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
             'mgs' : 'Deleted successfully',
             'user' : user
         })
-        
+
     } catch(err) {
         throw new Error(err)
     }
