@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
 
     const authorization = req.headers['authorization']
     const token = authorization && authorization.replace('Bearer ', '')
-    
+
     const data = jwt.verify(token, process.env.JWT_KEY)
 
     try {
