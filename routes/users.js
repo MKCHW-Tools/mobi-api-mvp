@@ -44,7 +44,7 @@ router.post('/users/login', async function(req, res) {
     
                 res.status(200).send({
                     'result':'Success',
-                    'user': loggedIn,
+                    'user': user,
                     //'token': token
                 })
             }
