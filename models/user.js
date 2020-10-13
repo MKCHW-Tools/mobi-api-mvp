@@ -111,7 +111,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
     return user
 }
 
-userSchema.statics.delete = async id => {
+userSchema.statics.deleteById = async id => {
 
     return await User.findByIdAndRemove( id, ( err, user ) => {
 
