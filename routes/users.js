@@ -101,7 +101,7 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
     //console.log(req)
     const id = req.params.id
     const user =  await User.deleteUser( id )
-    console.log(user)
+    console.log( user )
     
 })
 
