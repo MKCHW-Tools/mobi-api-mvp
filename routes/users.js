@@ -99,11 +99,30 @@ router.put('/users/:id', auth, async (req, res) => {
 })
 
 router.delete('/users/delete/:id', auth, async (req, res) => {
-    //console.log(req)
+
     const id = req.params.id
-    const user =  await User.delete( id )
-    console.log( user )
-    
+
+    if( !id ) {
+        return req.status(500).send({
+            'result' : 'Failure',
+            'msg' : 'Invalid resource'
+        })
+
+    }
+
+    try {
+        const user =  await User.delete( id )
+
+        req.status(200).send({
+            'result' : 'Success',
+            'mgs' : 'Deleted successfully',
+            'user' : user
+        })
+        
+    } catch(err) {
+        throw new Error(err)
+    }
+     
 })
 
 module.exports = router

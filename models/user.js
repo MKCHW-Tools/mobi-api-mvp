@@ -115,14 +115,12 @@ userSchema.statics.delete = async function(id) {
 
     const user = await User.findByIdAndRemove( id, ( err, user ) => {
 
-        console.log(user)
-        if( err ) return req.status(500).send( err )
+        if( err ) {
+            console.error(err)
+            throw new Error('Something wrong')
+        }
 
-        return req.status(200).send({
-            'result' : 'Success',
-            'mgs' : 'Successfully deleted',
-            'user' : user
-        })
+        return user
     })
 }
 
