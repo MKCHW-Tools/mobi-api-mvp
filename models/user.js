@@ -55,11 +55,12 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.pre('save', async function(next){
-    const user = this
-    if (!user.isModified('password')) return next()
+    //const user = this
+    if (this.password !== undefined) return next()
+
+    this.password = await bcrypt.hash(this.password, 8)
     
-    user.password = await bcrypt.hash(user.password, 8)
-    next()
+    return next()
 })
 
 userSchema.methods.generateAuthToken = async function(){
