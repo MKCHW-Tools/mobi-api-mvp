@@ -39,11 +39,30 @@ const userSchema = mongoose.Schema({
         unique: true,
         maxLength: 12
     },
+    avator: {
+        type: String,
+
+    },
     password: {
         type: String,
         required: true,
         minLength: 7
     },
+    roles: [
+        {
+            role: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    capabilities: [
+        {
+            capability: {
+                type: String,
+            }
+        }
+    ],
     tokens: [
         {
             token: {
@@ -55,7 +74,6 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.pre('save', async function(next) {
-    //const user = this
     if (this.isModified('password')) return next()
 
     this.password = await bcrypt.hash(this.password, 8)
@@ -92,10 +110,10 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
     const isPasswordMatch = await bcrypt.compare( password, user.password )
 
-    console.log(password)
-    console.log(user.password)
+    // console.log(password)
+    //console.log(user.password)
 
-    console.log(isPasswordMatch)
+    //console.log(isPasswordMatch)
 
     if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
