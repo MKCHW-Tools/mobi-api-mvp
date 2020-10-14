@@ -104,6 +104,10 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
 
     const id = req.params.id
 
+    const {user} = req.user
+    
+    console.log(user)
+
     if( !id ) {
         return res.status(500).send({
             'result' : 'Failure',
