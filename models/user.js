@@ -113,15 +113,14 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
 userSchema.statics.update = async function(id, data) {
 
-    const user = await User.findByIdAndUpdate( id, data, {new: true}, ( err, user ) => {
+    const user = await User.findByIdAndUpdate( id, data)
 
-        if( err ) {
+        /* if( err ) {
             console.error(err)
             throw new Error('Something is wrong')
-        }
+        } */
 
         return user
-    })
 }
 
 userSchema.statics.delete = async id => {
