@@ -113,7 +113,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
 
 userSchema.statics.update = async function(id, data) {
 
-    const user = await User.findByIdAndUpdate( id, data)
+    const user = await User.findByIdAndUpdate( id, data, {new: true})
 
         /* if( err ) {
             console.error(err)
