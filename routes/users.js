@@ -102,7 +102,6 @@ router.put('/users/:id', auth, async (req, res) => {
 
 router.delete('/users/delete/:id', auth, async (req, res) => {
 
-    req.headers.authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Zjg1NjljMjIzYmNkMTAwMTc3ZTQwNTYiLCJpYXQiOjE2MDI2MjA4MTksImV4cCI6MTYwMjYyMjYxOX0.lpustUjytHv_kFXraSeFgtfaZnZ-XhxnxlmNQw7fVXI"
     const id = req.params.id
 
     if( !id ) {
