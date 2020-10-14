@@ -116,10 +116,10 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
 
         const user =  await User.delete( id )
 
-        if(user) {
+        if(!user) {
             res.status(404).send({
                 'result' : 'Failure',
-                'mgs' : user.error,
+                'msgs' : 'Unknown user',
             })
         } else {
             res.status(200).send({
