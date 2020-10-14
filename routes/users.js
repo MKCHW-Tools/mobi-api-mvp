@@ -114,7 +114,8 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
 
     try {
 
-        await User.delete( id )
+        const user = await User.delete( id )
+        console.log(user)
 
     } catch( e ) {
         console.log(e)
