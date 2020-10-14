@@ -96,9 +96,38 @@ router.post('/users/logout-all', auth, async (req, res) => {
 
 router.put('/users/:id', auth, async (req, res) => {
     const id = req.params.id
-    const user =  await User.update( id, req.body )
+   
+    if( !id ) {
+        return res.status(500).send({
+            'result' : 'Failure',
+            'msg' : 'Invalid resource'
+        })
 
-    console.log(user)
+    }
+
+
+    try {
+
+        const user =  await User.update( id, req.body )
+
+        if(user) {
+
+            res.status(200).send({
+                'result' : 'Success',
+                'mgs' : 'Updated successfully',
+                'user' : user
+            })
+
+        } else {
+            res.status(404).send({
+                'result' : 'Failure',
+                'msgs' : 'Unknown user',
+            })
+        }
+
+    } catch( e ) {
+        console.log(e)
+    }
 
 })
 
