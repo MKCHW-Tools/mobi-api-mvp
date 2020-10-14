@@ -113,13 +113,21 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
     }
 
     try {
+
         const user =  await User.delete( id )
-        
-        res.status(200).send({
-            'result' : 'Success',
-            'mgs' : 'Deleted successfully',
-            'user' : user
-        })
+
+        if(user.error) {
+            res.status(404).send({
+                'result' : 'Failure',
+                'mgs' : user.error,
+            })
+        } else {
+            res.status(200).send({
+                'result' : 'Success',
+                'mgs' : 'Deleted successfully',
+                'user' : user
+            })
+        }
 
     } catch(err) {
         throw new Error(err)
