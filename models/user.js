@@ -133,7 +133,10 @@ userSchema.statics.delete = async function(id) {
             throw new Error('Something wrong')
         }
 
+        if (!user) throw new Error('User not found')
+
         return user
+        
     })
 }
 
