@@ -124,18 +124,10 @@ userSchema.statics.update = async function(id, data) {
     })
 }
 
-userSchema.statics.delete = async function(id) {
+userSchema.statics.delete = async id => {
 
-    await User.findByIdAndRemove( id, ( err, user ) => {
-
-        if( err ) {
-            console.error(err)
-            throw new Error('Something wrong')
-        }
-        
-        throw user
-
-    })
+    const user = await User.findByIdAndRemove(id)
+    return user
 
 }
 
