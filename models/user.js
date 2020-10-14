@@ -126,20 +126,20 @@ userSchema.statics.update = async function(id, data) {
 
 userSchema.statics.delete = async function(id) {
 
-    return await User.findByIdAndRemove( id, ( err, user ) => {
+    const user = await User.findByIdAndRemove( id, ( err, user ) => {
 
         if( err ) {
             console.error(err)
             throw new Error('Something wrong')
         }
 
-        if (!user) return {
-            'error':'User not found'
-        }
+        console.log(user)
 
         return user
 
     })
+
+    return user
 }
 
 const User = mongoose.model('User', userSchema)
