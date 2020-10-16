@@ -13,20 +13,20 @@ const router = express.Router()
 
 router.post('/api/v1/expenses', auth, async function(req, res){
 
-    try {
-        const { _id } = req.user
-        
-        req.body.user = _id
+    
+    const { _id } = req.user
+    
+    req.body.user = _id
 
-        const expense = new Expense(req.body)
+    const expense = new Expense(req.body)
 
-        await expense.save()
+    await expense.save()
+    
+    if(expense)
+        return res.status(201).send(expense)
+    else
+        res.status(500).send('Failed to save expense')
 
-        res.status(201).send({ expense })
-        
-    } catch (error) {
-        res.status(400).send(error)
-    }
 })
 
 /*
