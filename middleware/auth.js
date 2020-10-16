@@ -38,5 +38,6 @@ const authRole = role => {
 }
 
 module.exports = {
-    auth
+    auth,
+    authRole
 }
