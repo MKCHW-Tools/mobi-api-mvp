@@ -99,7 +99,7 @@ const authUpdateUser = async (req, res, next) => {
     const editor = await User.getUser(req.body.editor)
 
     if(!editor) return res.status(403).send('Not Allowed')
-
+    console.log(req.user._id)
     if(!canUpdateUser(editor, req.user._id)) {
         return res.status(403).send('Not Allowed')
     }
