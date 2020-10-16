@@ -1,9 +1,7 @@
 const {ROLES} = require('../roles')
 
 const canUpdateUser = (editor, userId) => {
-    console.log('Editor', editor._id)
-    console.log('UserId', userId)
-
+    console.log(editor.roles.includes(ROLES.ADMIN) || editor._id === userId)
     return editor.roles.includes(ROLES.ADMIN) || editor._id == userId
 }
 
