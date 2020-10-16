@@ -124,10 +124,8 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
 const authUpdateUser = async (req, res, next) => {
 
-    //const editor = await User.getUser(req.body.editor)
-
     if(!req.user) return res.status(403).send('Not Allowed')
-    if(!req.params.id) return res.status(404).send('Not Found')
+    if(!req.params.id) return res.status(404).send('Missing ID')
 
     if(!canUpdateUser(req.user, req.params.id)) {
         return res.status(403).send('Not Allowed')
@@ -141,7 +139,6 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     
     if( !id ) return res.status(500).send('Missing ID')
 
-    const {updates} = req.body
     const user =  await User.update( id, req.body )
     
     if(user) {
