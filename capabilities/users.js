@@ -1,8 +1,9 @@
 const {ROLES} = require('../roles')
 
 const canUpdateUser = (editor, userId) => {
-    console.log(userId.localeCompare(editor._id))
-    return editor.roles.includes(ROLES.ADMIN) || userId.localeCompare(editor._id)
+    editorID = parseInt(editor._id)
+    userID = parseInt(userId)
+    return editor.roles.includes(ROLES.ADMIN) || editorID === userID
 }
 
 const canViewUserProfile = (user, profileId) => {
