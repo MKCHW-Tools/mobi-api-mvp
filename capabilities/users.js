@@ -9,6 +9,7 @@ const canUpdateUser = (editor, userId) => {
 const canViewProfile = (viewer, profileId) => {
     viewerID = parseInt(viewer._id)
     profileID = parseInt(profileId)
+    console.log( 'viewer ', viewerID , 'user',  profileId)
     return viewer.roles.includes(ROLES.ADMIN) /*|| viewerID === profileID*/
 }
 
