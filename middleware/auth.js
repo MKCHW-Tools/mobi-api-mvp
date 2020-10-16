@@ -3,8 +3,11 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 const auth = async (req, res, next) => {
+    
+    if(!req.header('Authorization'))
+        return res.status(403).send('Missing token')
 
-    const token = req.header('Authorization').replace('Bearer ', '')
+    const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
     if( token == null || token == '' || token.length == 0) {
         res.status(403)
         return res.send('You need to sign in')
