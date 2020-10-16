@@ -94,6 +94,16 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     return res.status(200).send(visibleUsers)
 })
 
+const authUpdateUser = (req, res, next) => {
+
+    if(!canUpdateUser(req.user, userId)) {
+        return res.status(403).send('Not Allowed')
+    }
+
+    next()
+
+}
+
 router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const id = req.params.id
     
@@ -129,16 +139,6 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     }
     
 })
-
-const authUpdateUser = (req, res, next) => {
-
-    if(!canUpdateUser(req.user, userId)) {
-        return res.status(403).send('Not Allowed')
-    }
-
-    next()
-
-}
 
 router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
     
