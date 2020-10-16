@@ -91,6 +91,11 @@ userSchema.methods.generateAuthToken = async function() {
     return token
 }
 
+userSchema.statics.getUsers = async () => {
+    const users = await this.find({})
+    return users
+}
+
 userSchema.statics.findByCredentials = async function( phone = '', email = '', username = '', password = '' ) {
 
     let user
@@ -121,6 +126,8 @@ userSchema.statics.update = async function(id, data) {
 
     return user
 }
+
+
 
 userSchema.statics.delete = async id => {
     const user = await User.findByIdAndRemove(id)

@@ -65,11 +65,16 @@ router.get('/users/profile', auth, async (req, res) => {
     res.send(req.user)
 })
 
-router.get('/users', async (req, res) => {
+router.get('/users', auth, authRole('admin'), async (req, res) => {
 
-    res.send([
-        'user'
-    ])
+    const users = await User.getUsers()
+
+    if(!users) {
+        res.status(404)
+        return res.send('Users not found')
+    }
+
+    return res.status(200).send(users)
 })
 
 router.post('/users/logout', auth, async (req, res) => {
