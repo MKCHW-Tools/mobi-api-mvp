@@ -64,6 +64,8 @@ router.post('/users/login', async function(req, res) {
 })
 
 const authProfileViewer = async (req, res, next) => {
+    
+    if(!req.user) return res.status(403).send('You need to Login please')
 
     if(!canViewProfile(req.user, req.params.id)) {
         return res.status(403).send('Not Allowed')
@@ -71,9 +73,30 @@ const authProfileViewer = async (req, res, next) => {
 
     next()
 }
-router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 
-    res.send(req.user)
+router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
+    
+    const {id} = req.params
+    
+    if(!id) return res.status(404).send('Not Found')
+
+    const profile = await User.getUser(id)
+
+    if(!profile._id) return res.status(404).send('Not Found')
+
+    const {createdAt, _id, username, name, email, phone, roles} = user
+    res.status(200).send({
+        "result":"Success",
+        "profile": {
+            createdAt,
+            _id,
+            username,
+            name,
+            email,
+            phone,
+            roles
+        }
+    })
 })
 
 router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
