@@ -70,11 +70,12 @@ router.get('/users', auth, authRole('admin'), async (req, res) => {
     const users = await User.getUsers()
 
     if(!users) {
-        res.status(404)
-        return res.send('Users not found')
+        return res.status(404).send('Users not found')
     }
 
-    return res.status(200).send(users)
+    let visibleUsers = users.map( user => {user._id, user.createdAt,user.name,user.username,user.phone, user.roles, user.capabilities})
+
+    return res.status(200).send(visibleUsers)
 })
 
 router.post('/users/logout', auth, async (req, res) => {
