@@ -95,7 +95,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 })
 
 const authUpdateUser = (req, res, next) => {
-    console.log(req.user)
+    console.log(req.body)
     if(!canUpdateUser(req.user, req.user._id)) {
         return res.status(403).send('Not Allowed')
     }
