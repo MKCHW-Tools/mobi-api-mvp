@@ -1,9 +1,11 @@
 const express = require('express')
 const User = require('../models/user')
 const {auth, authRole} = require('../middleware/auth')
+const {canUPdate} = require('../capabilities/users')
+const {ROLES} = require('../roles')
 const router = express.Router()
 
-router.post('/users', auth, authRole('admin'), async (req, res) => {
+router.post('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     try {
         const user = new User(req.body)
         await user.save()
@@ -66,7 +68,7 @@ router.get('/users/profile', auth, async (req, res) => {
     res.send(req.user)
 })
 
-router.get('/users', auth, authRole('admin'), async (req, res) => {
+router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
     const users = await User.getUsers()
 
@@ -92,6 +94,78 @@ router.get('/users', auth, authRole('admin'), async (req, res) => {
     return res.status(200).send(visibleUsers)
 })
 
+router.put('/users/:id', auth, canUpdate, async (req, res) => {
+    const id = req.params.id
+    
+    if( !id ) {
+        return res.status(500).send({
+            'result' : 'Failure',
+            'msg' : 'Invalid resource'
+        })
+        
+    }
+    
+    try {
+        
+        const user =  await User.update( id, req.body )
+        
+        if(user) {
+            
+            res.status(200).send({
+                'result' : 'Success',
+                'mgs' : 'Updated successfully',
+                'user' : user
+            })
+            
+        } else {
+            res.status(404).send({
+                'result' : 'Failure',
+                'msgs' : 'Unknown user',
+            })
+        }
+        
+    } catch( e ) {
+        console.log(e)
+    }
+    
+})
+
+router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
+    
+    const id = req.params.id
+    
+    const {user} = req.user
+    
+    if( !id ) {
+        return res.status(500).send({
+            'result' : 'Failure',
+            'msg' : 'Invalid resource'
+        })
+        
+    }
+    
+    try {
+        
+        const user = await User.delete( id )
+        if(user) {
+            res.status(200).send({
+                'result' : 'Success',
+                'mgs' : 'Deleted successfully',
+                'user' : user
+            })
+        } else {
+            res.status(404).send({
+                'result' : 'Failure',
+                'msgs' : 'Unknown user',
+            })
+        }
+        
+    } catch( e ) {
+        console.log(e)
+    }
+    
+})
+
 router.post('/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter( token => token.token != req.token)
@@ -113,77 +187,4 @@ router.post('/users/logout-all', auth, async (req, res) => {
         res.status(500).send(error)
     }
 })
-
-router.put('/users/:id', auth, async (req, res) => {
-    const id = req.params.id
-   
-    if( !id ) {
-        return res.status(500).send({
-            'result' : 'Failure',
-            'msg' : 'Invalid resource'
-        })
-
-    }
-
-    try {
-
-        const user =  await User.update( id, req.body )
-
-        if(user) {
-
-            res.status(200).send({
-                'result' : 'Success',
-                'mgs' : 'Updated successfully',
-                'user' : user
-            })
-
-        } else {
-            res.status(404).send({
-                'result' : 'Failure',
-                'msgs' : 'Unknown user',
-            })
-        }
-
-    } catch( e ) {
-        console.log(e)
-    }
-
-})
-
-router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
-
-    const id = req.params.id
-
-    const {user} = req.user
-
-    if( !id ) {
-        return res.status(500).send({
-            'result' : 'Failure',
-            'msg' : 'Invalid resource'
-        })
-
-    }
-
-    try {
-
-        const user = await User.delete( id )
-        if(user) {
-            res.status(200).send({
-                'result' : 'Success',
-                'mgs' : 'Deleted successfully',
-                'user' : user
-            })
-        } else {
-            res.status(404).send({
-                'result' : 'Failure',
-                'msgs' : 'Unknown user',
-            })
-        }
-
-    } catch( e ) {
-        console.log(e)
-    }
-     
-})
-
 module.exports = router
