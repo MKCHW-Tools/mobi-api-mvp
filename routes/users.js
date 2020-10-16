@@ -64,12 +64,10 @@ router.post('/users/login', async function(req, res) {
 })
 
 const authProfileViewer = async (req, res, next) => {
-    
+
     if(!req.user) return res.status(403).send('You need to Login please')
 
-    if(!canViewProfile(req.user, req.params.id)) {
-        return res.status(403).send('Not Allowed')
-    }
+    if(!canViewProfile(req.user, req.params.id)) return res.status(403).send('Not Allowed')
 
     next()
 }
