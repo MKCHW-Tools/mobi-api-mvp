@@ -8,7 +8,8 @@ router.post('/users', auth, authRole('admin'), async (req, res) => {
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
-        res.status(201).send({ user })
+        const {createdAt, _id, username, name, email, phone, roles} = user
+        res.status(201).send({createdAt, _id, username, name, email, phone, roles})
         
     } catch (error) {
         res.status(400).send(error)
