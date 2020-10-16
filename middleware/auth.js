@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 const auth = async (req, res, next) => {
-    
+
     if(!req.header('Authorization'))
         return res.status(403).send('Missing token')
 
@@ -33,7 +33,7 @@ const authRole = role => {
     return (req, res, next) => {
         console.log(req.user)
         if( !req.user.roles.includes(role) ) {
-            res.status(401)
+            res.status(403)
             return res.send('Not Allowed')
         }
 
