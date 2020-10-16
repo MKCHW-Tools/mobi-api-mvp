@@ -1,7 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const {auth, authRole} = require('../middleware/auth')
-const {canUPdateUser, canUpdateUser} = require('../capabilities/users')
+const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {ROLES} = require('../roles')
 const router = express.Router()
 
@@ -63,7 +63,15 @@ router.post('/users/login', async function(req, res) {
     }
 })
 
-router.get('/users/profile', auth, async (req, res) => {
+const authProfileViewer = async (req, res, next) => {
+
+    if(!canViewProfile(req.user, req.params.id)) {
+        return res.status(403).send('Not Allowed')
+    }
+
+    next()
+}
+router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 
     res.send(req.user)
 })
@@ -72,9 +80,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
     const users = await User.getUsers()
 
-    if(!users) {
-        return res.status(404).send('Users not found')
-    }
+    if(!users) return res.status(404).send('Users not found')
 
     const visibleUsers = []
 
@@ -118,6 +124,7 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     if(user) {
 
         const {createdAt, _id, username, name, phone, email, roles} = user
+
         return res.status(200).send({
             'result' : 'Success',
             'mgs' : 'Updated successfully',
@@ -198,4 +205,5 @@ router.post('/users/logout-all', auth, async (req, res) => {
         res.status(500).send(error)
     }
 })
+
 module.exports = router
