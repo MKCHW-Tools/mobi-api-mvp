@@ -83,7 +83,7 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
     if(!profile._id) return res.status(404).send('Not Found')
 
     const {createdAt, _id, username, name, email, phone, roles} = profile
-    
+
     res.status(200).send({
         "result":"Success",
         "profile": {
@@ -124,11 +124,12 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
 const authUpdateUser = async (req, res, next) => {
 
-    const editor = await User.getUser(req.body.editor)
+    //const editor = await User.getUser(req.body.editor)
 
-    if(!editor) return res.status(403).send('Not Allowed')
+    if(!req.user) return res.status(403).send('Not Allowed')
+    if(!req.params.id) return res.status(404).send('Not Found')
 
-    if(!canUpdateUser(editor, req.user._id)) {
+    if(!canUpdateUser(req.user, req.params.id)) {
         return res.status(403).send('Not Allowed')
     }
 
@@ -141,7 +142,7 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     if( !id ) return res.status(500).send('Missing ID')
 
     const {updates} = req.body
-    const user =  await User.update( id, updates )
+    const user =  await User.update( id, req.body )
     
     if(user) {
 
