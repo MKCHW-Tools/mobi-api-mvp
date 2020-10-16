@@ -9,7 +9,7 @@ const canUpdateUser = (editor, userId) => {
 const canViewProfile = (viewer, profileId) => {
     viewerID = parseInt(viewer._id)
     profileID = parseInt(profileId)
-    return viewer.roles.includes(ROLES.ADMIN) || viewerID === profileID
+    return viewer.roles.includes(ROLES.ADMIN) /*|| viewerID === profileID*/
 }
 
 module.exports = {
