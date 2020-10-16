@@ -94,7 +94,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     return res.status(200).send(visibleUsers)
 })
 
-const authUpdateUser = (req, res, next) => {
+const authUpdateUser = async (req, res, next) => {
 
     const editor = await User.getUser(req.body.editor)
 
