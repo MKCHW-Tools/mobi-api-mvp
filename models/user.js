@@ -58,11 +58,6 @@ const userSchema = mongoose.Schema({
             required: true
         }
     ],
-    capabilities: [
-        {
-            type: String,
-        }
-    ],
     tokens: [
         {
             token: {
@@ -131,8 +126,6 @@ userSchema.statics.update = async function(id, data) {
 
     return user
 }
-
-
 
 userSchema.statics.delete = async id => {
     const user = await User.findByIdAndRemove(id)

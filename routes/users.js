@@ -105,29 +105,21 @@ const authUpdateUser = async (req, res, next) => {
     }
 
     next()
-
 }
 
 router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
-    const id = req.params.id
+    const {id} = req.params
     
-    if( !id ) {
-        return res.status(500).send({
-            'result' : 'Failure',
-            'msg' : 'Unknow user'
-        })
-        
-    }
+    if( !id ) return res.status(500).send('Missing ID')
 
     const {updates} = req.body
     const user =  await User.update( id, updates )
     
     if(user) {
-        
         return res.status(200).send({
             'result' : 'Success',
             'mgs' : 'Updated successfully',
-            'user' : user
+            'user' : {creaatedAt, _id, username, name, phone, email, roles} = user
         })
         
     }

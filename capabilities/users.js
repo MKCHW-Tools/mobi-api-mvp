@@ -6,11 +6,13 @@ const canUpdateUser = (editor, userId) => {
     return editor.roles.includes(ROLES.ADMIN) || editorID === userID
 }
 
-const canViewUserProfile = (user, profileId) => {
-    return user.roles.include(ROLES.ADMIN) || user._id === profileId
+const canViewProfile = (viewer, profileId) => {
+    viewerID = parseInt(viewer._id)
+    profileID = parseInt(profileId)
+    return viewer.roles.include(ROLES.ADMIN) || viewerID === profileID
 }
 
 module.exports = {
     canUpdateUser,
-    canViewUserProfile
+    canViewProfile
 }
