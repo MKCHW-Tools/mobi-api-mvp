@@ -5,17 +5,56 @@ const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {ROLES} = require('../roles')
 const router = express.Router()
 
-router.post('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
-    try {
-        const user = new User(req.body)
-        await user.save()
-        const token = await user.generateAuthToken()
-        const {createdAt, _id, username, name, email, phone, roles} = user
-        res.status(201).send({createdAt, _id, username, name, email, phone, roles})
-        
-    } catch (error) {
-        res.status(400).send(error)
-    }
+router.post('/users/signup', async (req, res) => {
+    if(!req.body) return res.status(404).send({
+        "result": "Failure",
+        "msg": "Missing data"
+    })
+
+    const user = new User(req.body)
+    await user.save()
+    const token = await user.generateAuthToken()
+
+    const {createdAt, _id, username, name, email, phone, roles} = user
+
+    res.status(200).send({
+        "result":"Success",
+        "user":{
+            createdAt,
+            _id,
+            username,
+            name,
+            email,
+            phone,
+            roles
+        }
+    })
+})
+
+router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
+    if(!req.body) return res.status(404).send({
+        "result": "Failure",
+        "msg": "Missing data"
+    })
+
+    const user = new User(req.body)
+    await user.save()
+    const token = await user.generateAuthToken()
+
+    const {createdAt, _id, username, name, email, phone, roles} = user
+
+    res.status(200).send({
+        "result":"Success",
+        "user":{
+            createdAt,
+            _id,
+            username,
+            name,
+            email,
+            phone,
+            roles
+        }
+    })
 })
 
 router.post('/users/login', async function(req, res) {
