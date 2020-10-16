@@ -1,7 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const {auth, authRole} = require('../middleware/auth')
-const {canUPdate} = require('../capabilities/users')
+const {canUPdateUser, canUpdateUser} = require('../capabilities/users')
 const {ROLES} = require('../roles')
 const router = express.Router()
 
@@ -94,7 +94,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     return res.status(200).send(visibleUsers)
 })
 
-router.put('/users/:id', auth, canUpdate, async (req, res) => {
+router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const id = req.params.id
     
     if( !id ) {
@@ -129,6 +129,16 @@ router.put('/users/:id', auth, canUpdate, async (req, res) => {
     }
     
 })
+
+const authUpdateUser = (req, res, next) => {
+
+    if(!canUpdateUser(req.user, userId)) {
+        return res.status(403).send('Not Allowed')
+    }
+
+    next()
+
+}
 
 router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
     

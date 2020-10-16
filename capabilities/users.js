@@ -1,11 +1,11 @@
 const {ROLES} = require('../roles')
 
-const canUpdateUser = (user, userToUpdate) => {
-    return user.roles.include(ROLES.ADMIN) || user._id === userToUpdate._id
+const canUpdateUser = (user, userId) => {
+    return user.roles.includes(ROLES.ADMIN) || user._id === userId
 }
 
-const canViewUserProfile = (user, profile) => {
-    return user.roles.include(ROLES.ADMIN) || user._id === profile._id
+const canViewUserProfile = (user, profileId) => {
+    return user.roles.include(ROLES.ADMIN) || user._id === profileId
 }
 
 module.exports = {
