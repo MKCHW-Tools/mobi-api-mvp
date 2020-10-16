@@ -1,6 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
-const auth = require('../middleware/auth')
+const {auth} = require('../middleware/auth')
 const router = express.Router()
 
 router.post('/users', async function(req, res) {
@@ -105,7 +105,6 @@ router.put('/users/:id', auth, async (req, res) => {
 
     }
 
-
     try {
 
         const user =  await User.update( id, req.body )
@@ -136,8 +135,6 @@ router.delete('/users/delete/:id', auth, async (req, res) => {
     const id = req.params.id
 
     const {user} = req.user
-
-    console.log(user)
 
     if( !id ) {
         return res.status(500).send({
