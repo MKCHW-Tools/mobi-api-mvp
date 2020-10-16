@@ -79,15 +79,15 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     const visibleUsers = []
 
     users.forEach( user => {
-        let {_id, createdAt, name, username, phone, roles, capabilities} = user
+        let {_id, createdAt, name, username, phone, roles, email} = user
         visibleUsers.push({
             createdAt,
             _id,
             username,
             name,
             phone,
-            roles,
-            capabilities
+            email,
+            roles
         })
     })
 
@@ -116,14 +116,14 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const user =  await User.update( id, updates )
     
     if(user) {
-        
+
         const {createdAt, _id, username, name, phone, email, roles} = user
         return res.status(200).send({
             'result' : 'Success',
             'mgs' : 'Updated successfully',
             'user' : {
-                createdAt,
                 _id,
+                createdAt,
                 username,
                 name,
                 email,
