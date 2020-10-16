@@ -3,12 +3,12 @@ const User = require('../models/user')
 const {auth, authRole} = require('../middleware/auth')
 const router = express.Router()
 
-router.post('/users', async function(req, res) {
+router.post('/users', auth, authRole('admin'), async (req, res) => {
     try {
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        res.status(201).send({ user })
         
     } catch (error) {
         res.status(400).send(error)
