@@ -95,8 +95,12 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
 })
 
 const authUpdateUser = (req, res, next) => {
-    console.log(req.body)
-    if(!canUpdateUser(req.user, req.user._id)) {
+
+    const editor = await User.getUser(req.body.editor)
+
+    if(!editor) return res.status(403).send('Not Allowed')
+
+    if(!canUpdateUser(editor, req.user._id)) {
         return res.status(403).send('Not Allowed')
     }
 
@@ -110,33 +114,28 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     if( !id ) {
         return res.status(500).send({
             'result' : 'Failure',
-            'msg' : 'Invalid resource'
+            'msg' : 'Unknow user'
         })
         
     }
+
+    const {updates} = req.body
+    const user =  await User.update( id, updates )
     
-    try {
+    if(user) {
         
-        const user =  await User.update( id, req.body.updates )
+        return res.status(200).send({
+            'result' : 'Success',
+            'mgs' : 'Updated successfully',
+            'user' : user
+        })
         
-        if(user) {
-            
-            res.status(200).send({
-                'result' : 'Success',
-                'mgs' : 'Updated successfully',
-                'user' : user
-            })
-            
-        } else {
-            res.status(404).send({
-                'result' : 'Failure',
-                'msgs' : 'Unknown user',
-            })
-        }
-        
-    } catch( e ) {
-        console.log(e)
     }
+
+    return res.status(500).send({
+        'result' : 'Failure',
+        'msgs' : 'Updates failed',
+    })
     
 })
 

@@ -1,7 +1,7 @@
 const {ROLES} = require('../roles')
 
 const canUpdateUser = (editor, userId) => {
-    return editor.roles.includes(ROLES.ADMIN) || editor === userId
+    return editor.roles.includes(ROLES.ADMIN) || editor._id === userId
 }
 
 const canViewUserProfile = (user, profileId) => {

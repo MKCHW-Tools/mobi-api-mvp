@@ -96,6 +96,11 @@ userSchema.statics.getUsers = async () => {
     return users
 }
 
+userSchema.statics.getUser = async id => {
+    const user = await User.findOne({_id: id})
+    return user
+}
+
 userSchema.statics.findByCredentials = async function( phone = '', email = '', username = '', password = '' ) {
 
     let user
