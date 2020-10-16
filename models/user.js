@@ -92,7 +92,7 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 userSchema.statics.getUsers = async () => {
-    const users = await this.find({})
+    const users = await User.find({})
     return users
 }
 
