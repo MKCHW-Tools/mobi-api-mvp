@@ -73,7 +73,20 @@ router.get('/users', auth, authRole('admin'), async (req, res) => {
         return res.status(404).send('Users not found')
     }
 
-    let visibleUsers = users.map( user => {user._id, user.createdAt,user.name,user.username,user.phone, user.roles, user.capabilities})
+    const visibleUsers = []
+
+    users.forEach( user => {
+        let {_id, createdAt, name, username, phone, roles, capabilities} = user
+        visibleUsers.push({
+            createdAt,
+            _id,
+            username,
+            name,
+            phone,
+            roles,
+            capabilities
+        })
+    })
 
     return res.status(200).send(visibleUsers)
 })
