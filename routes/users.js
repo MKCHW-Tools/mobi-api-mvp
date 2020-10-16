@@ -13,7 +13,6 @@ router.post('/users/signup', async (req, res) => {
 
     const user = new User(req.body)
     await user.save()
-    const token = await user.generateAuthToken()
 
     const {createdAt, _id, username, name, email, phone, roles} = user
 
@@ -39,7 +38,6 @@ router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
     const user = new User(req.body)
     await user.save()
-    const token = await user.generateAuthToken()
 
     const {createdAt, _id, username, name, email, phone, roles} = user
 
