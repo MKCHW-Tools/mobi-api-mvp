@@ -33,6 +33,10 @@ const userSchema = mongoose.Schema({
             if (!validator.isEmail(value)) throw new Error(`Invalid Email address`)
         }
     },
+    status: {
+        type: String,
+        default: 'active'
+    },
     phone: {
         type: String,
         required: true,

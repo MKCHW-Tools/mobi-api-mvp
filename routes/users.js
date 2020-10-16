@@ -1,6 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
-const {auth} = require('../middleware/auth')
+const {auth, authRole} = require('../middleware/auth')
 const router = express.Router()
 
 router.post('/users', async function(req, res) {
@@ -130,7 +130,7 @@ router.put('/users/:id', auth, async (req, res) => {
 
 })
 
-router.delete('/users/delete/:id', auth, async (req, res) => {
+router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
 
     const id = req.params.id
 

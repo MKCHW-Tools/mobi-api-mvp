@@ -25,6 +25,18 @@ const auth = async (req, res, next) => {
     next()
 }
 
+const authRole = role => {
+
+    return (req, res, next) => {
+        if( !req.user.roles.includes(role) ) {
+            res.status(401)
+            return res.send('Not Allowed')
+        }
+
+        next()
+    }
+}
+
 module.exports = {
     auth
 }
