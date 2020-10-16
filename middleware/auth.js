@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
         return res.send('You need to sign in')
     }
         // req.path
-        // req.user = user
+        req.user = user
         // req.token = token
 
     next()
@@ -28,6 +28,7 @@ const auth = async (req, res, next) => {
 const authRole = role => {
 
     return (req, res, next) => {
+        console.log(req.user)
         if( !req.user.roles.includes(role) ) {
             res.status(401)
             return res.send('Not Allowed')
