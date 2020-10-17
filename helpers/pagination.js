@@ -33,7 +33,7 @@ const paginate = (model) => {
             res.total =  await model.countDocuments().exec()
             next()
 
-        } catch(e){
+        } catch(e) {
             res.status(500).json({message: e.message})
         }
 

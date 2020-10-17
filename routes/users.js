@@ -139,7 +139,7 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 
 router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
 
-    const {total, paginatedDocs:{next}, paginatedDocs:{previous}, paginatedDocs} = res
+    const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = res
 
     if(!paginatedDocs) return res.status(404).send('Users not found')
 
