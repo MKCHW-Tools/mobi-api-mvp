@@ -139,16 +139,16 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 
 router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
 
-    // const users = await User.getUsers()
-    const users = res.paginatedResults
+    const {total, next, previous, paginatedDocs} = res
 
-    if(!users) return res.status(404).send('Users not found')
+    if(!paginatedDocs) return res.status(404).send('Users not found')
 
-    const visibleUsers = []
+    const users = []
+    const {docs} = paginatedDocs
 
-    users.results.forEach( user => {
-        let {_id, createdAt, name, username, phone, roles, email} = user
-        visibleUsers.push({
+    docs.forEach( doc => {
+        let {_id, createdAt, name, username, phone, roles, email} = doc
+        users.push({
             createdAt,
             _id,
             username,
@@ -158,13 +158,13 @@ router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, re
             roles
         })
     })
-    users.results = visibleUsers
-    const {next, previous, results} = users
+
     return res.status(200).json({
         "result" : "Success",
+        total,
         next,
         previous,
-        "users": results
+        users
     })
 })
 

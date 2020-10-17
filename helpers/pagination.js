@@ -10,17 +10,17 @@ const paginate = (model) => {
         const startIndex = ( page - 1 ) * limit
         const endIndex = page * limit
     
-        const results = {}
+        const data = {}
     
         if(endIndex < await model.countDocuments().exec()) {
-            results.next = {
+            data.next = {
                 page: page + 1,
                 limit: limit
             }
         }
 
         if(startIndex > 0 ) {
-            results.previous = {
+            data.previous = {
                 page: page - 1,
                 limit: limit
             }
@@ -28,8 +28,9 @@ const paginate = (model) => {
         
         try {
 
-            results.results = await model.find().limit(limit).skip(startIndex).exec()
-            res.paginatedResults = results
+            data.docs = await model.find().limit(limit).skip(startIndex).exec()
+            res.paginatedDocs = data
+            res.total =  await model.countDocuments().exec()
             next()
 
         } catch(e){
