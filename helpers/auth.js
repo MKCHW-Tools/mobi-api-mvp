@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
         msg:'You need to sign in'
     })
     
-    jwt.verify(token, process.env.JWT_KEY, async (err, verifiedJWT) => {
+    jwt.verify(token, process.env.KEY, async (err, verifiedJWT) => {
         if(err instanceof jwt.TokenExpiredError){
             console.log('Will refresh jwt')
         } else {
