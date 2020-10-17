@@ -164,7 +164,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, re
         "result" : "Success",
         next,
         previous,
-        results
+        "users": results
     })
 })
 
