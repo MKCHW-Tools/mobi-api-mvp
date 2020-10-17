@@ -159,12 +159,12 @@ router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, re
         })
     })
     users.results = visibleUsers
-    const {next, previous, users:results} = users
+    const {next, previous, results} = users
     return res.status(200).json({
         "result" : "Success",
         next,
         previous,
-        users
+        results
     })
 })
 
