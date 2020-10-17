@@ -12,7 +12,7 @@ const paginate = (model) => {
     
         const results = {}
     
-        if(endIndex < users.length) {
+        if(endIndex < await model.countDoments().exec()) {
             results.next = {
                 page: page + 1,
                 limit: limit
