@@ -17,11 +17,11 @@ const auth = async (req, res, next) => {
     })
     
     jwt.verify(token, process.env.KEY, async (err, verifiedJWT) => {
-        if(err instanceof jwt.TokenExpiredError){
+        if(err instanceof jwt.TokenExpiredError) {
             console.log('Will refresh jwt')
         } else {
             
-            //console.log(verified)
+            console.log(verifiedJWT)
             const user = await User.findOne({_id: verifiedJWT._id, 'tokens.token': token })
 
             if (!user) return res.status(403).send('You need to sign in')
