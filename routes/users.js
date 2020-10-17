@@ -1,8 +1,8 @@
 const express = require('express')
 const User = require('../models/user')
-const {auth, authRole} = require('../middleware/auth')
+const {auth, authRole} = require('../helpers/auth')
 const {canViewProfile, canUpdateUser} = require('../capabilities/users')
-const {ROLES} = require('../roles')
+const {ROLES} = require('../helpers/roles')
 const router = express.Router()
 
 router.post('/users/signup', async (req, res) => {

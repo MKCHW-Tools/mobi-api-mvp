@@ -1,4 +1,4 @@
-const {ROLES} = require('../roles')
+const {ROLES} = require('../helpers/roles')
 
 const canUpdateUser = (editor, userId) => {
     editorID = String(editor._id)
