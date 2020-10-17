@@ -8,9 +8,15 @@ const auth = async (req, res, next) => {
         return res.status(403).send('Missing token')
 
     const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
-    if( !token ) return res.status(403).send('You need to sign in')
+    if( !token ) return res.status(403).json({
+        result:'Failure',
+        msg:'You need to sign in'
+    })
+
     try {
-        const jwtInfo = jwt.verify(token, process.env.JWT_KEY)
+        const jwtInfo = jwt.verify(token, process.env.JWT_KEY, (err, verifiedJWT) => {
+            console.log(verified)
+        })
 
         const user = await User.findOne({_id: jwtInfo._id, 'tokens.token': token})
 
@@ -20,8 +26,9 @@ const auth = async (req, res, next) => {
         // req.token = token
 
         next()
+
     } catch( e ) {
-        
+
         if(e instanceof TokenExpiredError) {
             console.log(e.message)
             res.status(403).json({
