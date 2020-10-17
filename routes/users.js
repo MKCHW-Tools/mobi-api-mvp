@@ -145,15 +145,15 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     const results = {}
 
     const users = await User.getUsers()
-    
+
     if(endIndex < users.length) {
-        result.next = {
+        results.next = {
             page: page + 1,
             limit: limit
         }
     }
     if(startIndex > 0 ) {
-        result.previous = {
+        results.previous = {
             page: page - 1,
             limit: limit
         }
