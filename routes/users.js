@@ -68,7 +68,6 @@ router.post('/users/login', async function(req, res) {
                 "result": "Failure",
                 "msg": "Email or Phone or Username and password are required!"
             })
-            console.log(req.body)
 
         } else {
             const user =  await User.findByCredentials(phone, email, username, password)
