@@ -4,43 +4,36 @@ const User = require('../models/user')
 
 const auth = async (req, res, next) => {
 
-    if(!req.header('Authorization'))
-        return res.status(403).send('Missing token')
+    if(!req.header('Authorization')) return res.status(403).json({
+        result: 'Failure',
+        msg: 'Missing token'
+    })
 
     const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
+
     if( !token ) return res.status(403).json({
         result:'Failure',
         msg:'You need to sign in'
     })
-
-    try {
-        const jwtInfo = jwt.verify(token, process.env.JWT_KEY, (err, verifiedJWT) => {
-            if(err instanceof jwt.TokenExpiredError){
-                console.log('Will refresh jwt')
-            }
+    
+    await jwt.verify(token, process.env.JWT_KEY, (err, verifiedJWT) => {
+        if(err instanceof jwt.TokenExpiredError){
+            console.log('Will refresh jwt')
+        } else {
+            
             //console.log(verified)
-        })
+            const user = await User.findOne({_id: verifiedJWT._id, 'tokens.token': token })
 
-        const user = await User.findOne({_id: jwtInfo._id, 'tokens.token': token})
+            if (!user) return res.status(403).send('You need to sign in')
+            
+            req.user = user
+            // req.token = token
+    
+            next()
 
-        if (!user) return res.status(403).send('You need to sign in')
-        
-        req.user = user
-        // req.token = token
-
-        next()
-
-    } catch( e ) {
-
-        if(e instanceof TokenExpiredError) {
-            console.log(e.message)
-            res.status(403).json({
-                result: "Failure",
-                msg: 'Expired token'
-            })
         }
+    })
 
-    }
 }
 
 const authRole = role => {
