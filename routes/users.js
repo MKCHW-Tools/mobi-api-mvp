@@ -136,6 +136,25 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 })
 
 router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
+    const page = parseInt(req.query.page)
+    const limit = parseInt(req.query.limit)
+
+    const startIndex = ( page - 1 ) * limit
+    const endIndex = page * limit
+
+    const results = {}
+    if(endIndex < users.length) {
+        result.next = {
+            page: page + 1,
+            limit: limit
+        }
+    }
+    if(startIndex > 0 ) {
+        result.previous = {
+            page: page - 1,
+            limit: limit
+        }
+    }
 
     const users = await User.getUsers()
 
@@ -156,7 +175,9 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
         })
     })
 
-    return res.status(200).send(visibleUsers)
+    results.results = visibleUsers.slice(startIndex, endIndex)
+
+    return res.status(200).send(results)
 })
 
 const authUpdateUser = async (req, res, next) => {
