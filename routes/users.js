@@ -4,6 +4,7 @@ const {auth, authRole} = require('../helpers/auth')
 const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
+const bcrypt = require('bcrypt')
 
 const router = express.Router()
 
@@ -12,6 +13,8 @@ router.post('/users/signup', async (req, res) => {
         "result": "Failure",
         "msg": "Missing data"
     })
+    
+    if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
 
     const user = new User(req.body)
     await user.save()
