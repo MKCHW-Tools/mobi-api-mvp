@@ -2,7 +2,9 @@ const express = require('express')
 const User = require('../models/user')
 const {auth, authRole} = require('../helpers/auth')
 const {canViewProfile, canUpdateUser} = require('../capabilities/users')
+const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
+
 const router = express.Router()
 
 router.post('/users/signup', async (req, res) => {
@@ -135,29 +137,10 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
     })
 })
 
-router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
-    const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 10
+router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
 
-    const startIndex = ( page - 1 ) * limit
-    const endIndex = page * limit
-
-    const results = {}
-
-    const users = await User.getUsers()
-
-    if(endIndex < users.length) {
-        results.next = {
-            page: page + 1,
-            limit: limit
-        }
-    }
-    if(startIndex > 0 ) {
-        results.previous = {
-            page: page - 1,
-            limit: limit
-        }
-    }
+    // const users = await User.getUsers()
+    const users = res.paginatedResults
 
     if(!users) return res.status(404).send('Users not found')
 
@@ -176,9 +159,10 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
         })
     })
 
-    results.results = visibleUsers.slice(startIndex, endIndex)
-
-    return res.status(200).send(results)
+    return res.status(200).json({
+        "result" : "Success",
+        visibleUsers
+    })
 })
 
 const authUpdateUser = async (req, res, next) => {
