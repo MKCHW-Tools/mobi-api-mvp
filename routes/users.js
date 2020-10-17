@@ -144,24 +144,24 @@ router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, re
 
     if(!users) return res.status(404).send('Users not found')
 
-    const visibleUsers = []
+    // const visibleUsers = []
 
-    users.forEach( user => {
-        let {_id, createdAt, name, username, phone, roles, email} = user
-        visibleUsers.push({
-            createdAt,
-            _id,
-            username,
-            name,
-            phone,
-            email,
-            roles
-        })
-    })
+    // users.forEach( user => {
+    //     let {_id, createdAt, name, username, phone, roles, email} = user
+    //     visibleUsers.push({
+    //         createdAt,
+    //         _id,
+    //         username,
+    //         name,
+    //         phone,
+    //         email,
+    //         roles
+    //     })
+    // })
 
     return res.status(200).json({
         "result" : "Success",
-        visibleUsers
+        users
     })
 })
 
