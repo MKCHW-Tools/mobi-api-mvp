@@ -214,7 +214,7 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-router.delete('/users/delete/:id', auth, authRole('admin'), async (req, res) => {
+router.delete('/users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
