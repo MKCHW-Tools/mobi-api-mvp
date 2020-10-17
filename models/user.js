@@ -72,7 +72,8 @@ userSchema.pre('save', async function(next) {
     if (this.isModified('password')) return next()
 
     this.password = await bcrypt.hash(this.password, 8)
-
+    console.log(this.password)
+    
     return next()
 })
 
@@ -116,7 +117,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
     const isPasswordMatch = await bcrypt.compare( password, user.password )
 
     console.log(user)
-    
+
     if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
     return user
