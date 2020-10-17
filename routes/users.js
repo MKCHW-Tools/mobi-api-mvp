@@ -36,10 +36,13 @@ router.post('/users/signup', async (req, res) => {
 })
 
 router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
+    
     if(!req.body) return res.status(404).send({
         "result": "Failure",
         "msg": "Missing data"
     })
+
+    if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
 
     const user = new User(req.body)
     await user.save()
@@ -186,6 +189,8 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
+    
+    if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
 
     const user =  await User.update( id, req.body )
     
