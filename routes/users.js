@@ -143,6 +143,9 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
     const endIndex = page * limit
 
     const results = {}
+
+    const users = await User.getUsers()
+    
     if(endIndex < users.length) {
         result.next = {
             page: page + 1,
@@ -156,7 +159,7 @@ router.get('/users', auth, authRole(ROLES.ADMIN), async (req, res) => {
         }
     }
 
-    const users = await User.getUsers()
+    
 
     if(!users) return res.status(404).send('Users not found')
 
