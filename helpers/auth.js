@@ -15,8 +15,10 @@ const auth = async (req, res, next) => {
 
     try {
         const jwtInfo = jwt.verify(token, process.env.JWT_KEY, (err, verifiedJWT) => {
-            console.log( err instanceof jwt.TokenExpiredError)
-            console.log(verified)
+            if(err instanceof jwt.TokenExpiredError){
+                console.log('Will refresh jwt')
+            }
+            //console.log(verified)
         })
 
         const user = await User.findOne({_id: jwtInfo._id, 'tokens.token': token})
