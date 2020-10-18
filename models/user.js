@@ -78,6 +78,7 @@ userSchema.methods.generateAuthToken = async function() {
     user.tokens = user.tokens.concat({ token })
 
     const refreshToken = jwt.sign({_id: user._id}, process.env.REFRESH_KEY, {expiresIn:'7d'})
+    console.log(refreshToken)
     user.refreshToken = refreshToken
 
     await user.save()
