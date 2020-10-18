@@ -81,7 +81,7 @@ userSchema.methods.generateAuthToken = async function() {
     user.refreshToken = refreshToken
 
     await user.save()
-    return token
+    return {token, refreshToken}
 }
 
 userSchema.statics.getUsers = async () => {
