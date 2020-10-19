@@ -20,7 +20,6 @@ const auth = async (req, res, next) => {
         if(err instanceof jwt.TokenExpiredError) {
             console.log('Will refresh jwt')
         } else {
-            console.log(verifiedJWT)
             if(!verifiedJWT) return res.status(403).send('You need to sign in')
             
             const user = await User.findOne({username: verifiedJWT.username, /*'accessToken': token*/ })
