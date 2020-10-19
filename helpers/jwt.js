@@ -2,7 +2,7 @@ require('dotenv').config()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const signRefreshToken = userid => {
+const signRefreshToken = async userid => {
     const savedUser = await User.findOne({_id: userid})
     console.log(savedUser)
 
