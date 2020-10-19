@@ -72,21 +72,35 @@ const userSchema = mongoose.Schema({
     }
 })
 
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async () => {
     const user = this
-    const token = jwt.sign({_id: user._id }, process.env.ACCESS_KEY, {expiresIn: '1800s'})
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
-    return {token}
+    /*const token =*/
+    jwt.sign({_id: user._id }, process.env.ACCESS_KEY, {expiresIn: '1800s'}, (err, accessToken) => {
+        if( err ) {
+            console.log(err)
+        } else {
+            user.tokens = user.tokens.concat({ accessToken })
+            jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, (err, refreshToken) => {
+                if(err){
+                    console.log(err)
+                } else {
+                    user.refreshToken = refreshToken
+                    await user.save()
+                }
+            })
+        }
+    //await user.save()
+    //return {token}
+    })
 }
 
-userSchema.methods.signRefreshToken = async () => {
+/*userSchema.methods.signRefreshToken = async () => {
     const user = this
     const refreshToken = jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'})
     user.refreshToken = refreshToken
     await user.save()
     return {refreshToken}
-}
+}*/
 
 userSchema.statics.getUsers = async () => {
     const users = await User.find({})
