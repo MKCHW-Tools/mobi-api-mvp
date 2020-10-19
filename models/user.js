@@ -81,10 +81,10 @@ userSchema.methods.generateAuthToken = async () => {
             console.log(err)
         } else {
 
-            user.tokens = user.tokens.concat({ accessToken })
+            user.tokens = user.tokens.concat({ 'accessToken' })
             await user.save()
             console.log(accessToken)
-            
+
             jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, async (err, refreshToken) => {
                 if(err){
                     console.log(err)
