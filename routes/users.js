@@ -96,13 +96,11 @@ router.post('/users/login', async function(req, res) {
                 })
     
             } else {
-    
-                const loggedIn = new User(user)
-                const accessToken = await signAccessToken({user.username})
+                const {username} = user
+                const accessToken = await signAccessToken({username})
     
                 res.status(200).send({
                     'result':'Success',
-                    'user': loggedIn,
                     accessToken
                 })
             }
