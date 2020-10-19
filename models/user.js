@@ -75,7 +75,7 @@ const userSchema = mongoose.Schema({
 userSchema.methods.generateAuthToken = async () => {
     const user = this
     /*const token =*/
-    jwt.sign({_id: user._id }, process.env.ACCESS_KEY, {expiresIn: '1800s'}, async (err, accessToken) => {
+    jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1800s'}, async (err, accessToken) => {
 
         if( err ) {
             console.log(err)
