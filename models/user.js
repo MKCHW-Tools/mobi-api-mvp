@@ -81,7 +81,7 @@ userSchema.methods.generateAuthToken = async () => {
             console.log(err)
         } else {
 
-            user.tokens = user.tokens.concat({ 'accessToken' })
+            user.tokens = user.tokens.concat('accessToken')
             await user.save()
             console.log(accessToken)
 
