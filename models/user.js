@@ -87,6 +87,7 @@ userSchema.methods.generateAuthToken = async () => {
                 if(err){
                     console.log(err)
                 } else {
+                    console.log(refreshToken)
                     user.refreshToken = refreshToken
                     await user.save()
                 }
