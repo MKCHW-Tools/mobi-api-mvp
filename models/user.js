@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {signRefreshToken} = require('../helpers/jwt')
+// const {signRefreshToken} = require('../helpers/jwt')
 const userSchema = mongoose.Schema({
     createdAt: {
         type: Date,
@@ -76,9 +76,16 @@ userSchema.methods.generateAuthToken = async function() {
     const user = this
     const token = jwt.sign({_id: user._id }, process.env.ACCESS_KEY, {expiresIn: '1800s'})
     user.tokens = user.tokens.concat({ token })
-    user.refreshToken = await signRefreshToken(user._id)
     await user.save()
     return {token}
+}
+
+userSchema.methods.signRefreshToken = async () => {
+    const user = this
+    const refreshToken = jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'})
+    user.refreshToken = refreshToken
+    await user.save()
+    return {refreshToken}
 }
 
 userSchema.statics.getUsers = async () => {
