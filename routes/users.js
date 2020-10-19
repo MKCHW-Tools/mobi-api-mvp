@@ -5,6 +5,7 @@ const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
+const {signRefreshToken} = './helps/jwt'
 
 const router = express.Router()
 
@@ -15,8 +16,10 @@ router.post('/users/signup', async (req, res) => {
     })
     
     if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
-
+    
     const user = new User(req.body)
+    req.body.refreshToken =  await signRefreshToken(user._id)
+
     await user.save()
 
     const {createdAt, _id, username, name, email, phone, roles} = user
@@ -31,7 +34,9 @@ router.post('/users/signup', async (req, res) => {
             email,
             phone,
             roles
-        }
+        },
+        "accessToken": false,
+        "refreshToken":req.body.refreshToken
     })
 })
 
@@ -189,7 +194,7 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
-    
+
     if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
 
     const user =  await User.update( id, req.body )
