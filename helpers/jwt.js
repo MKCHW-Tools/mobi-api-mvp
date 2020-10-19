@@ -1,19 +1,17 @@
 require('dotenv').config()
-const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const signRefreshToken = async userid => {
-    const savedUser = await User.findOne({_id: userid})
-    
-    console.log(savedUser)
+const signAccessToken = async payload => {
+    const accessToken = jwt.sign(payload, process.env.ACCESS_KEY_SECRET, {expiresIn: '1800s'})
+    return accessToken
+}
 
-    const refreshToken = jwt.sign({}, {
-        userId: savedUser._id
-    }, process.env.REFRESH_KEY, {expiresIn: '1m'})
-    
-    return {refreshToken}
+const signRefreshToken = async payload => {
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_KEY_SECRET, {expiresIn: '7d'})
+    return refreshToken
 }
 
 module.exports = {
+    signAccessToken,
     signRefreshToken
 }

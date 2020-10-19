@@ -5,7 +5,7 @@ const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
-const {signRefreshToken} = require('../helpers/jwt')
+const {signAccessToken,signRefreshToken} = require('../helpers/jwt')
 
 const router = express.Router()
 
@@ -16,7 +16,14 @@ router.post('/users/signup', async (req, res) => {
     })
     
     if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
+    const {username, name} = req.body
+
+    accessToken = await signRefreshToken({username, name})
+    refreshToken = await signRefreshToken({username, name})
     
+    req.body.accessToken = accessToken
+    req.body.refreshToken = refreshToken
+
     const user = new User(req.body)
     await user.save()
 
@@ -33,8 +40,8 @@ router.post('/users/signup', async (req, res) => {
             phone,
             roles
         },
-        "accessToken": false,
-        "refreshToken":req.body.refreshToken
+        "accessToken": accessToken,
+        "refreshToken": refreshToken
     })
 })
 

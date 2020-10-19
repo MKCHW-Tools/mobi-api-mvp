@@ -66,13 +66,16 @@ const userSchema = mongoose.Schema({
             }
         }
     ],
+    accessToken: {
+        type:String
+    },
     refreshToken: {
         type:String,
         // required: true
     }
 })
 
-userSchema.methods.generateAuthToken = async () => {
+userSchema.statics.generateAuthToken = async () => {
     const user = this
     /*const token =*/
     jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, async (err, accessToken) => {
