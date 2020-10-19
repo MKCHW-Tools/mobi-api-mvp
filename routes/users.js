@@ -54,6 +54,14 @@ router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
     if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
 
+    const {username:uname} = req.body
+
+    accessToken = await signAccessToken({uname})
+    refreshToken = await signRefreshToken({uname})
+
+    req.body.accessToken = accessToken
+    req.body.refreshToken = refreshToken
+
     const user = new User(req.body)
     await user.save()
 
@@ -69,7 +77,9 @@ router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
             email,
             phone,
             roles
-        }
+        },
+        "accessToken": accessToken,
+        "refreshToken": refreshToken
     })
 })
 
