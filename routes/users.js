@@ -18,9 +18,9 @@ router.post('/users/signup', async (req, res) => {
     if(req.body.password) req.body.password = await bcrypt.hash(req.body.password, 8)
     const {username, name} = req.body
 
-    accessToken = await signRefreshToken({username, name})
-    refreshToken = await signRefreshToken({username, name})
-    
+    accessToken = await signRefreshToken({uname:username, name})
+    refreshToken = await signRefreshToken({uname:username, name})
+
     req.body.accessToken = accessToken
     req.body.refreshToken = refreshToken
 
