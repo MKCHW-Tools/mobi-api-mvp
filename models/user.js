@@ -74,33 +74,6 @@ const userSchema = mongoose.Schema({
     }
 })
 
-userSchema.statics.generateAuthToken = async () => {
-    const user = this
-    jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, async (err, accessToken) => {
-
-        if( err ) {
-            console.log(err)
-        } else {
-
-            user.tokens = user.tokens.concat('accessToken')
-            await user.save()
-            console.log(accessToken)
-
-            jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, async (err, refreshToken) => {
-                if(err){
-                    console.log(err)
-                } else {
-                    console.log(refreshToken)
-                    user.refreshToken = refreshToken
-                    await user.save()
-                }
-            })
-        }
-    //await user.save()
-    //return {token}
-    })
-}
-
 userSchema.statics.getUsers = async () => {
     const users = await User.find({})
     return users
@@ -129,8 +102,6 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
     if ( !user || user == null || user.length == 0 ) throw new Error( `User not found ${phone}, ${email}, ${username}` )
 
     const isPasswordMatch = await bcrypt.compare( password, user.password )
-
-    console.log(user)
 
     if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
 
