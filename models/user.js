@@ -71,13 +71,11 @@ const userSchema = mongoose.Schema({
     },
     refreshToken: {
         type:String,
-        // required: true
     }
 })
 
 userSchema.statics.generateAuthToken = async () => {
     const user = this
-    /*const token =*/
     jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'}, async (err, accessToken) => {
 
         if( err ) {
@@ -102,14 +100,6 @@ userSchema.statics.generateAuthToken = async () => {
     //return {token}
     })
 }
-
-/*userSchema.methods.signRefreshToken = async () => {
-    const user = this
-    const refreshToken = jwt.sign({_id: user._id }, process.env.REFRESH_KEY, {expiresIn: '1y'})
-    user.refreshToken = refreshToken
-    await user.save()
-    return {refreshToken}
-}*/
 
 userSchema.statics.getUsers = async () => {
     const users = await User.find({})
