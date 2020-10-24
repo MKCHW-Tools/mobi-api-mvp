@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 const validateToken = async refreshToken => {
+    console.log('Here')
     let user = {}
     
     if(!refreshToken) return res.status(403).json({
