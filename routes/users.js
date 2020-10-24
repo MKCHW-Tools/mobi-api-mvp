@@ -108,10 +108,11 @@ router.post('/users/login', async function(req, res) {
             } else {
                 const {username} = user
                 const accessToken = await signAccessToken({username})
-    
+                const refreshToken = await signRefreshToken({username})
                 res.status(200).send({
                     'result':'Success',
-                    accessToken
+                    accessToken,
+                    refreshToken
                 })
             }
         }
