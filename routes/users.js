@@ -5,7 +5,7 @@ const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
-const {signAccessToken,signRefreshToken} = require('../helpers/jwt')
+const {signAccessToken, signRefreshToken} = require('../helpers/jwt')
 
 const router = express.Router()
 
