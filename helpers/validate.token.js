@@ -2,8 +2,9 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
-const validateToken = async (refreshToken) => {
+const validateToken = async refreshToken => {
     let user = {}
+    
     if(!refreshToken) return res.status(403).json({
         result: 'Failure',
         msg: 'You need to sign in'
@@ -13,7 +14,7 @@ const validateToken = async (refreshToken) => {
         if(err instanceof jwt.TokenExpiredError)
             return res.status(403).json({
                 'result': 'Failure',
-                'msg': 'refresh token expired'
+                'msg': 'Expired refresh token'
             })
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
