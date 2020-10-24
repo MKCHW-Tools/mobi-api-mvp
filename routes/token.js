@@ -11,7 +11,7 @@ const router = express.Router()
 // Update user tokens
 // Return tokens
 
-router.post('/token/refresh', async (req, res) => {
+router.get('/token/refresh', async (req, res) => {
 
     if( !req.header('Authorization') ) return res.status(403).json({
         result: 'Failure',
@@ -45,6 +45,7 @@ router.post('/token/refresh', async (req, res) => {
         'accessToken' : newAccessToken,
         'refreshToken' : newRefreshToken
     })
+    
 })
 
 module.exports = router
