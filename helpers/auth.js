@@ -16,10 +16,11 @@ const auth = async (req, res, next) => {
 
     const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
 
-    if( !token ) return res.status(403).json({
-        result:'Failure',
-        msg:'You need to sign in'
-    })
+    if( !token ) 
+        return res.status(403).json({
+            result:'Failure',
+            msg:'You need to sign in'
+        })
     
     const owner = await User.findOne({accessToken: token})
 
@@ -28,7 +29,7 @@ const auth = async (req, res, next) => {
             'result':'Failure',
             'msg': 'Invalid access Token'
         })
-        
+
     jwt.verify(token, process.env.ACCESS_KEY_SECRET, async (err, verifiedJWT) => {
         if(err instanceof jwt.TokenExpiredError) 
             return res.status(403).json({
@@ -36,11 +37,26 @@ const auth = async (req, res, next) => {
                 'msg': 'Token expired'
             })
 
-        if(!verifiedJWT) return res.status(403).send('You need to sign in')
-        // const user = await User.findOne({username: verifiedJWT.username, /*'accessToken': token*/ })
+        if(!verifiedJWT)
+            return res.status(403).json({
+                'result': 'Failure',
+                'msg': 'Token expired'
+            })
 
-        // if (!user) return res.status(403).send('You need to sign in ...')
+        const user = await User.findOne({username: verifiedJWT.username, /*'accessToken': token*/ })
+
+        if (!user) 
+            return res.status(401).json({
+                'result': 'Failure',
+                'msg': 'Can not find user'
+            })
         
+        if (String(user._id) != String(owner._id))
+            return res.status(401).json({
+                'result': 'Failure',
+                'msg': 'Mismatched tokens'
+            })
+
         req.user = owner
         // req.token = token
 
