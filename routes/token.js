@@ -12,7 +12,7 @@ const router = express.Router()
 // Return tokens
 
 router.get('/token/refresh', async (req, res) => {
-
+    console.log('Refreshing')
     if( !req.header('Authorization') ) return res.status(403).json({
         result: 'Failure',
         msg: 'Missing token'
@@ -33,6 +33,7 @@ router.get('/token/refresh', async (req, res) => {
             'msg':'You need to sign in'
         })
     }
+    console.log(user)
     const {username} = user.tokenOwner
 
     newAccessToken = await signAccessToken({username})
