@@ -115,6 +115,12 @@ router.post('/users/login', async function(req, res) {
                 accessToken,
                 refreshToken
             })
+
+        return res.status(200).send({
+            'result':'Failure',
+            userName,
+            updated
+        })
         
     } catch (error) {
         console.log(error)
