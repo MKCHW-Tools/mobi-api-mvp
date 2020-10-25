@@ -103,8 +103,9 @@ router.post('/users/login', async function(req, res) {
                 "msg": "Wrong login details"
             })
         console.log(user)
-        const accessToken = await signAccessToken({user.username})
-        const refreshToken = await signRefreshToken({user.username})
+
+        const accessToken = await signAccessToken({username})
+        const refreshToken = await signRefreshToken({username})
         
         const updated = await User.update(user._id, {accessToken, refreshToken})
 
