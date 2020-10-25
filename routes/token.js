@@ -13,39 +13,39 @@ const router = express.Router()
 
 router.get('/token/refresh', async (req, res) => {
     console.log('Refreshing')
-    if( !req.header('Authorization') ) return res.status(403).json({
-        result: 'Failure',
-        msg: 'Missing token'
-    })
+    // if( !req.header('Authorization') ) return res.status(403).json({
+    //     result: 'Failure',
+    //     msg: 'Missing token'
+    // })
 
-    const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
+    // const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
 
-    if( !refreshToken) return res.status(403).json({
-        result: 'Failure',
-        msg: 'You need to sign in'
-    })
+    // if( !refreshToken) return res.status(403).json({
+    //     result: 'Failure',
+    //     msg: 'You need to sign in'
+    // })
 
-    const user = await validateToken(refreshToken)
+    // const user = await validateToken(refreshToken)
 
-    if(!user.tokenOwner) {
-        return res.status(403).json({
-            'result':'Failure',
-            'msg':'You need to sign in'
-        })
-    }
-    console.log(user)
-    const {username} = user.tokenOwner
+    // if(!user.tokenOwner) {
+    //     return res.status(403).json({
+    //         'result':'Failure',
+    //         'msg':'You need to sign in'
+    //     })
+    // }
+    // console.log(user)
+    // const {username} = user.tokenOwner
 
-    newAccessToken = await signAccessToken({username})
-    newRefreshToken = await signRefreshToken({username})
+    // newAccessToken = await signAccessToken({username})
+    // newRefreshToken = await signRefreshToken({username})
     
-    //Update user tokens
+    // //Update user tokens
 
-    return res.status(201).json({
-        'result' : 'Success',
-        'accessToken' : newAccessToken,
-        'refreshToken' : newRefreshToken
-    })
+    // return res.status(201).json({
+    //     'result' : 'Success',
+    //     'accessToken' : newAccessToken,
+    //     'refreshToken' : newRefreshToken
+    // })
     
 })
 
