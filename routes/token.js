@@ -20,19 +20,18 @@ router.get('/token/refresh', validateToken,async (req, res) => {
             'msg':'You need to sign in'
         })
     }
-    console.log(owner)
-    const {username} = onwer
+    const {username} = owner
 
     newAccessToken = await signAccessToken({username})
     newRefreshToken = await signRefreshToken({username})
     
     // //Update user tokens
 
-    // return res.status(201).json({
-    //     'result' : 'Success',
-    //     'accessToken' : newAccessToken,
-    //     'refreshToken' : newRefreshToken
-    // })
+    return res.status(201).json({
+        'result' : 'Success',
+        'accessToken' : newAccessToken,
+        'refreshToken' : newRefreshToken
+    })
     
 })
 
