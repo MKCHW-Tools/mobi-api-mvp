@@ -12,33 +12,19 @@ const router = express.Router()
 // Return tokens
 
 router.get('/token/refresh', validateToken,async (req, res) => {
-    // console.log('Refreshing')
-    // if( !req.header('Authorization') ) return res.status(403).json({
-    //     result: 'Failure',
-    //     msg: 'Missing token'
-    // })
+    const {owner} = req
 
-    // const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
-    // console.log(refreshToken)
+    if(!owner) {
+        return res.status(403).json({
+            'result':'Failure',
+            'msg':'You need to sign in'
+        })
+    }
+    console.log(owner)
+    const {username} = onwer
 
-    // if( !refreshToken) return res.status(403).json({
-    //     result: 'Failure',
-    //     msg: 'You need to sign in'
-    // })
-
-    // const user = await validateToken(refreshToken)
-    console.log(req.owner)
-    // if(!user.tokenOwner) {
-    //     return res.status(403).json({
-    //         'result':'Failure',
-    //         'msg':'You need to sign in'
-    //     })
-    // }
-    // console.log(user)
-    // const {username} = user.tokenOwner
-
-    // newAccessToken = await signAccessToken({username})
-    // newRefreshToken = await signRefreshToken({username})
+    newAccessToken = await signAccessToken({username})
+    newRefreshToken = await signRefreshToken({username})
     
     // //Update user tokens
 
