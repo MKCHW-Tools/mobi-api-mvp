@@ -18,7 +18,7 @@ const validateToken = async (req, res, next) => {
 
     const owner = await User.findOne({refreshToken: refreshToken})
 
-    if(!owner._id)
+    if(!owner)
         return res.status(401).json({
             'result': 'Failure',
             'msg': 'Invalid refresh token'
