@@ -11,23 +11,23 @@ const router = express.Router()
 // Update user tokens
 // Return tokens
 
-router.get('/token/refresh', async (req, res) => {
-    console.log('Refreshing')
-    if( !req.header('Authorization') ) return res.status(403).json({
-        result: 'Failure',
-        msg: 'Missing token'
-    })
+router.get('/token/refresh', validateToken,async (req, res) => {
+    // console.log('Refreshing')
+    // if( !req.header('Authorization') ) return res.status(403).json({
+    //     result: 'Failure',
+    //     msg: 'Missing token'
+    // })
 
-    const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
-    console.log(refreshToken)
+    // const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
+    // console.log(refreshToken)
 
-    if( !refreshToken) return res.status(403).json({
-        result: 'Failure',
-        msg: 'You need to sign in'
-    })
+    // if( !refreshToken) return res.status(403).json({
+    //     result: 'Failure',
+    //     msg: 'You need to sign in'
+    // })
 
-    const user = await validateToken(refreshToken)
-    console.log(user)
+    // const user = await validateToken(refreshToken)
+    console.log(req.owner)
     // if(!user.tokenOwner) {
     //     return res.status(403).json({
     //         'result':'Failure',
@@ -49,7 +49,5 @@ router.get('/token/refresh', async (req, res) => {
     // })
     
 })
-
-router.get('/token', async (req, res) => { console.log('Token') })
 
 module.exports = router
