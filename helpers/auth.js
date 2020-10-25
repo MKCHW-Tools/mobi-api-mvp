@@ -29,7 +29,6 @@ const auth = async (req, res, next) => {
             })
 
         if(!verifiedJWT) return res.status(403).send('You need to sign in')
-           console.log(verifiedJWT) 
         const user = await User.findOne({username: verifiedJWT.username, /*'accessToken': token*/ })
 
         if (!user) return res.status(403).send('You need to sign in ...')
