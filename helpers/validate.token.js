@@ -23,7 +23,7 @@ const validateToken = async refreshToken => {
         console.log(tokenOwner)
         if (!tokenOwner) return res.status(403).send('You need to sign in')
 
-        user.tokenOwner = tokenOwner
+        user = tokenOwner
 
     })
 
