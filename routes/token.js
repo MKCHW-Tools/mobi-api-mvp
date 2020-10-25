@@ -49,4 +49,6 @@ router.get('/token/refresh', async (req, res) => {
     
 })
 
+router.get('/token/refresh', async (req, res) => { console.log('Token') })
+
 module.exports = router
