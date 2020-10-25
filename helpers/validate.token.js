@@ -18,9 +18,9 @@ const validateToken = async refreshToken => {
             })
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
-        console.log(verifiedToken)
+
         const tokenOwner = await User.findOne({username: verifiedToken.username})
-        
+        console.log(tokenOwner)
         if (!tokenOwner) return res.status(403).send('You need to sign in')
 
         user.tokenOwner = tokenOwner
