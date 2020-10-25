@@ -25,15 +25,12 @@ const validateToken = async (req, res, next) => {
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
 
-        const tokenOwner = await User.findOne({username: verifiedToken.username})
-        // console.log(tokenOwner)
-        if (!tokenOwner) return res.status(403).send('You need to sign in')
-
-        req.owner = tokenOwner
-
+        const owner = await User.findOne({username: verifiedToken.username})
+        req.owner = owner
+        
+        return next()
     })
 
-    return next()
 }
 
 module.exports = {
