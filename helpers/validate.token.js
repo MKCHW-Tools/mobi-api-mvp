@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 const validateToken = async refreshToken => {
-    console.log('Here')
     let user = {}
     
     if(!refreshToken) return res.status(403).json({
@@ -19,9 +18,9 @@ const validateToken = async refreshToken => {
             })
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
-        
+        console.log(verifiedToken)
         const tokenOwner = await User.findOne({username: verifiedToken.username})
-
+        
         if (!tokenOwner) return res.status(403).send('You need to sign in')
 
         user.tokenOwner = tokenOwner
