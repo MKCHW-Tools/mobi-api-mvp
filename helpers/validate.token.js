@@ -15,9 +15,16 @@ const validateToken = async (req, res, next) => {
         result: 'Failure',
         msg: 'You need to sign in'
     })
+
+    const owner = await User.findOne({refreshToken})
     
+    if(!owner._id)
+        return res.status(401).json({
+            'result': 'Failure',
+            'msg': 'Invalid refresh token'
+        })
+
     jwt.verify(refreshToken, process.env.REFRESH_KEY_SECRET, async (err, verifiedToken) => {
-        console.log(err)
         if(err instanceof jwt.TokenExpiredError)
             return res.status(403).json({
                 'result': 'Failure',
@@ -26,7 +33,7 @@ const validateToken = async (req, res, next) => {
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
 
-        const owner = await User.findOne({username: verifiedToken.username})
+        // const owner = await User.findOne({username: verifiedToken.username})
         req.owner = owner
         
         return next()
