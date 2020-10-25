@@ -58,14 +58,6 @@ const userSchema = mongoose.Schema({
             required: true
         }
     ],
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true
-            }
-        }
-    ],
     accessToken: {
         type:String
     },
