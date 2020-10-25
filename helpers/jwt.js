@@ -2,7 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const signAccessToken = async payload => {
-    const accessToken = jwt.sign(payload, process.env.ACCESS_KEY_SECRET, {expiresIn: '30s'})
+    const accessToken = jwt.sign(payload, process.env.ACCESS_KEY_SECRET, {expiresIn: '5m'})
     return accessToken
 }
 
