@@ -13,13 +13,14 @@ const router = express.Router()
 
 router.get('/token/refresh', async (req, res) => {
     console.log('Refreshing')
-    // if( !req.header('Authorization') ) return res.status(403).json({
-    //     result: 'Failure',
-    //     msg: 'Missing token'
-    // })
+    if( !req.header('Authorization') ) return res.status(403).json({
+        result: 'Failure',
+        msg: 'Missing token'
+    })
 
-    // const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
-
+    const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
+    console.log(refreshToken)
+    
     // if( !refreshToken) return res.status(403).json({
     //     result: 'Failure',
     //     msg: 'You need to sign in'
