@@ -20,14 +20,14 @@ router.get('/token/refresh', async (req, res) => {
 
     const refreshToken = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
     console.log(refreshToken)
-    
-    // if( !refreshToken) return res.status(403).json({
-    //     result: 'Failure',
-    //     msg: 'You need to sign in'
-    // })
 
-    // const user = await validateToken(refreshToken)
+    if( !refreshToken) return res.status(403).json({
+        result: 'Failure',
+        msg: 'You need to sign in'
+    })
 
+    const user = await validateToken(refreshToken)
+    console.log(user)
     // if(!user.tokenOwner) {
     //     return res.status(403).json({
     //         'result':'Failure',
