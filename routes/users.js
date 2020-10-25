@@ -89,40 +89,40 @@ router.post('/users/login', async function(req, res) {
 
     try {
                 
-        if( !phone && !username && !email || !password) {
-            res.status(401).send({
+        if( !phone && !username && !email || !password)
+            return res.status(401).send({
                 "result": "Failure",
                 "msg": "Email or Phone or Username and password are required!"
             })
 
-        } else {
-            const user =  await User.findByCredentials(phone, email, username, password)
+        const user =  await User.findByCredentials(phone, email, username, password)
 
-            if ( !user || user.length <= 0 ) {
-    
-                res.status(401).send({
-                    "result": "Failure",
-                    "msg": "Wrong login details"
-                })
-    
-            } else {
-                const {username} = user
-                const accessToken = await signAccessToken({username})
-                const refreshToken = await signRefreshToken({username})
-                res.status(200).send({
-                    'result':'Success',
-                    accessToken,
-                    refreshToken
-                })
-            }
-        }
+        if ( !user )
+            return res.status(401).send({
+                "result": "Failure",
+                "msg": "Wrong login details"
+            })
+
+        const {_id, username} = user
+        const accessToken = await signAccessToken({username})
+        const refreshToken = await signRefreshToken({username})
+        
+        const updated = User.update(_id, {accessToken, refreshToken})
+
+        if(updated._id)
+            return res.status(200).send({
+                'result':'Success',
+                accessToken,
+                refreshToken
+            })
+        
 
     } catch (error) {
-        res.status(400).send({
+        console.log(error)
+        return res.status(400).send({
             'result':'Failure',
             'msg': 'Techinical error, check console'
         })
-        console.log(error)
     }
 })
 
