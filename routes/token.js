@@ -1,5 +1,5 @@
 const express = require('express')
-const validateToken = require('../helpers/validate.token')
+const {validateToken} = require('../helpers/validate.token')
 const User = require('../models/user')
 
 const router = express.Router()
