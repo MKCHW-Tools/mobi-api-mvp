@@ -103,9 +103,9 @@ router.post('/users/login', async function(req, res) {
                 "msg": "Wrong login details"
             })
 
-        const {_id, username: {uname}} = user
-        const accessToken = await signAccessToken({uname})
-        const refreshToken = await signRefreshToken({uname})
+        const {_id, username: {userName}} = user
+        const accessToken = await signAccessToken({userName})
+        const refreshToken = await signRefreshToken({userName})
         
         const updated = User.update(_id, {accessToken, refreshToken})
 
@@ -116,7 +116,6 @@ router.post('/users/login', async function(req, res) {
                 refreshToken
             })
         
-
     } catch (error) {
         console.log(error)
         return res.status(400).send({
