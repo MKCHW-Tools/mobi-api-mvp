@@ -107,7 +107,7 @@ router.post('/users/login', async function(req, res) {
         const accessToken = await signAccessToken({userName})
         const refreshToken = await signRefreshToken({userName})
         
-        const updated = User.update(_id, {accessToken, refreshToken})
+        const updated = await User.update(_id, {accessToken, refreshToken})
 
         if(updated._id)
             return res.status(200).send({
