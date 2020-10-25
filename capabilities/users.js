@@ -12,10 +12,7 @@ const canViewProfile = (viewer, profileId) => {
     return viewer.roles.includes(ROLES.ADMIN) || viewerID === profileID
 }
 
-
-
 module.exports = {
     canUpdateUser,
     canViewProfile,
-    canInvalidateTokens
 }
