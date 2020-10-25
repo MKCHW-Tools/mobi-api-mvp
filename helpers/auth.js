@@ -50,8 +50,9 @@ const auth = async (req, res, next) => {
                 'result': 'Failure',
                 'msg': 'Can not find user'
             })
-            
-        const userID = String(user._id), ownerID = String(owner._id) 
+
+        const userID = String(user._id) 
+        const ownerID = String(owner._id) 
         
         if ( userID != ownerID )
             return res.status(401).json({
