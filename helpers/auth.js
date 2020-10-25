@@ -43,15 +43,16 @@ const auth = async (req, res, next) => {
                 'msg': 'Token expired'
             })
 
-        const user = await User.findOne({username: verifiedJWT.username, /*'accessToken': token*/ })
+        const user = await User.findOne({username: verifiedJWT.username, accessToken: token })
 
         if (!user) 
             return res.status(401).json({
                 'result': 'Failure',
                 'msg': 'Can not find user'
             })
+        const userID = String(user._id), ownerID = String(owner._id) 
         
-        if (String(user._id) != String(owner._id))
+        if ( userID != ownerID )
             return res.status(401).json({
                 'result': 'Failure',
                 'msg': 'Mismatched tokens'
