@@ -16,7 +16,7 @@ const validateToken = async (req, res, next) => {
         msg: 'You need to sign in'
     })
 
-    const owner = await User.findOne({refreshToken})
+    const owner = await User.findOne({refreshToken: refreshToken})
 
     if(!owner._id)
         return res.status(401).json({
