@@ -50,6 +50,7 @@ const auth = async (req, res, next) => {
                 'result': 'Failure',
                 'msg': 'Can not find user'
             })
+            
         const userID = String(user._id), ownerID = String(owner._id) 
         
         if ( userID != ownerID )
@@ -59,7 +60,7 @@ const auth = async (req, res, next) => {
             })
 
         req.user = owner
-        
+
         next()
 
     })
