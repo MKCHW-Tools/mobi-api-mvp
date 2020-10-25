@@ -59,8 +59,7 @@ const auth = async (req, res, next) => {
             })
 
         req.user = owner
-        // req.token = token
-
+        
         next()
 
     })
