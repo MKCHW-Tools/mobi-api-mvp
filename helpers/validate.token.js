@@ -17,6 +17,7 @@ const validateToken = async (req, res, next) => {
     })
     
     jwt.verify(refreshToken, process.env.REFRESH_KEY_SECRET, async (err, verifiedToken) => {
+        console.log(err)
         if(err instanceof jwt.TokenExpiredError)
             return res.status(403).json({
                 'result': 'Failure',
