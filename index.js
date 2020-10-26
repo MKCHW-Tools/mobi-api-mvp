@@ -5,7 +5,7 @@ require('./db/db')
 
 const userRouter = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
-const noteRouter = require('./routes/expenses')
+const noteRouter = require('./routes/notes')
 
 const PORT = process.env.PORT || 4000
 
