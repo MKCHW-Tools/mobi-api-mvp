@@ -24,7 +24,7 @@ const auth = async (req, res, next) => {
     
     const owner = await User.findOne({accessToken: token})
 
-    if(!owner._id)
+    if(!owner)
         return res.status(401).json({
             'result':'Failure',
             'msg': 'Invalid access Token'
