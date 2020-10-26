@@ -29,7 +29,7 @@ router.get('/tokens/refresh', validateToken, async (req, res) => {
     newAccessToken = await signAccessToken({username})
     newRefreshToken = await signRefreshToken({username})
     
-    const updated = await User.update(_id, {token: newAccessToken, refreshToken: newRefreshToken})
+    const updated = await User.update(_id, {accessToken: newAccessToken, refreshToken: newRefreshToken})
 
     if(updated._id) 
         return res.status(201).json({
