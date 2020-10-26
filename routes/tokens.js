@@ -1,6 +1,6 @@
 const express = require('express')
 const {validateToken} = require('../helpers/validate.token')
-const {signAccessToken, signRefreshToken} = require('../helpers/generate-tokens')
+const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens')
 const {auth} = require('../helpers/authorize')
 const { canInvalidateTokens } = require('../capabilities/tokens')
 const User = require('../models/user')
