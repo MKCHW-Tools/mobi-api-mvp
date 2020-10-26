@@ -22,7 +22,7 @@ const noteSchema = mongoose.Schema({
         default: 'active'
     },
     details: {
-        type:Blob
+        type:String
     },
     category: {
         type: String
