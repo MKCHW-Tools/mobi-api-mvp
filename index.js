@@ -5,7 +5,7 @@ require('./db/db')
 
 const userRouter = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
-// const expenseRouter = require('./routes/expenses')
+const noteRouter = require('./routes/expenses')
 
 const PORT = process.env.PORT || 4000
 
@@ -14,7 +14,7 @@ app.use(express.json())
 
 app.use(userRouter)
 app.use(tokenRouter)
-// app.use(expenseRouter)
+app.use(noteRouter)
 
 app.get('/', (req, res) => res.send(`Oooops!! Nothing here.`))
 
