@@ -59,7 +59,7 @@ router.get('/notes/:id', auth, authNoteViewer, async (req, res) => {
     
     if(!id) return res.status(404).send('Not Found')
 
-    const profile = await User.getUser(id)
+    const profile = await Note.getNote(id)
 
     if(!profile) 
         return res.status(404).json({
