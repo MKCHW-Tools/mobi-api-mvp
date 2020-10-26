@@ -14,7 +14,8 @@ router.post('/notes/add', auth, async (req, res) => {
             "result": "Failure",
             "msg": "Missing data"
         })
-
+        
+    req.body.owner = req.user._id
     const note = new Note(req.body)
     await note.save()
 
