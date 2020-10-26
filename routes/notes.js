@@ -176,7 +176,7 @@ router.put('/notes/:id', auth, authUpdateNote, async (req, res) => {
     
 })
 
-router.delete('/notes/delete/:id', auth, canDeleteNote, async (req, res) => {
+router.delete('/notes/:id', auth, canDeleteNote, async (req, res) => {
     
     const id = req.params.id
     
