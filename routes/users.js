@@ -147,7 +147,7 @@ router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
 
     const profile = await User.getUser(id)
 
-    if(!profile._id) return res.status(404).send('Not Found')
+    if(!profile) return res.status(404).send('Not Found')
 
     const {createdAt, _id, username, name, email, phone, roles} = profile
 
