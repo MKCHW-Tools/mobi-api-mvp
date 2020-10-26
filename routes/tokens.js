@@ -75,7 +75,7 @@ router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) 
         })
 
     tokens.forEach(token => {
-        const owner = (token.type == 1) ? User.findOne({accesToken: token.accessToken}) : User.findOne({refreshToken: token.refreshToken})
+        const owner = (token.type == 1) ? User.findOne({accessToken: token.accessToken}) : User.findOne({refreshToken: token.refreshToken})
         console.log(owner)
         if(owner) {
             (token.type == 1) ? User.update(owner._id,{accessToken:''}) : User.update(owner._id,{refreshToken:''})
