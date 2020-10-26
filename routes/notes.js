@@ -14,24 +14,24 @@ router.post('/notes/add', auth, async (req, res) => {
             "result": "Failure",
             "msg": "Missing data"
         })
-        
+
     req.body.owner = req.user._id
     const note = new Note(req.body)
     await note.save()
 
-    const {_id, createdAt, title, details, status, category, tags, owner } = note
+    const {_id, createdAt, owner, title, details, status, category, tags } = note
 
     return res.status(200).json({
         "result":"Success",
         "note": {
-            createdAt,
             _id,
+            createdAt,
+            owner,
             title,
             details,
             status,
             category,
-            tags,
-            owner
+            tags
         }
     })
 })
