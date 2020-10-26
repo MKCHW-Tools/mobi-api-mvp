@@ -74,11 +74,11 @@ router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) 
             'msg':'Tokens not supplied'
         })
 
-    tokens.forEach(token => {
-        const owner = (token.type == 1) ? User.findOne({accessToken: token.accessToken}) : User.findOne({refreshToken: token.refreshToken})
+    tokens.forEach(async token => {
+        const owner = (token.type == 1) ? await User.findOne({accessToken: token.accessToken}) : await User.findOne({refreshToken: token.refreshToken})
         console.log(owner)
         if(owner) {
-            (token.type == 1) ? User.update(owner._id,{accessToken:''}) : User.update(owner._id,{refreshToken:''})
+            (token.type == 1) ? await User.update(owner._id,{accessToken:''}) : await User.update(owner._id,{refreshToken:''})
         }
     })
 
