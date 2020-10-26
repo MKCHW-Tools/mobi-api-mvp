@@ -27,13 +27,7 @@ const noteSchema = mongoose.Schema({
     category: {
         type: String
     },
-    tags: [
-        {
-            tag: {
-                type:String
-            }
-        }
-    ]
+    tags: [{type:String}]
 })
 
 noteSchema.statics.getNotes = async () => {
