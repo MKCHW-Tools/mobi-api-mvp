@@ -176,7 +176,30 @@ router.put('/notes/:id', auth, authUpdateNote, async (req, res) => {
     
 })
 
-router.delete('/notes/:id', auth, canDeleteNote, async (req, res) => {
+const authDeleteNote = async (req, res, next ) => {
+    
+    if(!req.user)
+        return res.status(403).json({
+            'result': 'Failure',
+            'msg': 'Not Allowed'
+        })
+
+    if(!req.params.id)
+        return res.status(404).json({
+            'result': 'Failure',
+            'msg': 'Missing ID'
+        })
+
+    if(!canDeleteNote(req.user, req.params.id))
+        return res.status(403).json({
+            'result': 'Failure',
+            'msg': 'Not Allowed'
+        })
+
+    next()
+
+}
+router.delete('/notes/:id', auth, authDeleteNote, async (req, res) => {
     
     const id = req.params.id
     
