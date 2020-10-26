@@ -49,9 +49,17 @@ router.get('/tokens/refresh', validateToken, async (req, res) => {
 
 const authInvalidateTokens = async (req, res, next) => {
 
-    if(!req.user) return res.status(403).send('You need to Login please')
+    if(!req.user)
+        return res.status(403).json({
+            'result': 'Failure',
+            'msg':'Login to perform the action'
+        })
     
-    if(!canInvalidateTokens(req.user, req.params.id)) return res.status(403).send('Not Allowed')
+    if(!canInvalidateTokens(req.user, req.params.id)) 
+        return res.status(403).json({
+            'result': 'Failure',
+            'msg': 'Not Authorized to perform action'
+        })
 
     next()
 }
@@ -60,10 +68,11 @@ router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) 
     
     const {tokens} = req.body
 
-    if(tokens !== undefined && tokens.length <= 0) return res.status(404).json({
-        'result':'Failure',
-        'msg':'Tokens not supplied'
-    })
+    if(tokens !== undefined && tokens.length <= 0) 
+        return res.status(404).json({
+            'result':'Failure',
+            'msg':'Tokens not supplied'
+        })
 
     tokens.forEach(token => {
         const owner = (token.type == 1) ? User.findOne({accesToken: token.accessToken}) : User.findOne({refreshToken: token.refreshToken})
