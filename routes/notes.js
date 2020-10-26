@@ -1,5 +1,5 @@
 const express = require('express')
-const User = require('../models/user')
+const Note = require('../models/note')
 const {auth, authRole} = require('../helpers/authorize')
 const {canEditNote, canViewNote,canDeleteNote, } = require('../capabilities/notes')
 const {paginate} = require('../helpers/pagination')
