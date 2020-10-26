@@ -36,7 +36,7 @@ const validateToken = async (req, res, next) => {
 
         const verifiedOwner = await User.findOne({username: verifiedToken.username})
 
-        if(!verifiedOwner._id)
+        if(!verifiedOwner)
             return res.status(403).json({
                 'result': 'Failure',
                 'msg':'Invalid refresh token'

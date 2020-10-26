@@ -56,7 +56,7 @@ const authInvalidateTokens = async (req, res, next) => {
     next()
 }
 
-router.post('/tokens/in-validate-token', auth, authInvalidateTokens, async (req, res) => {
+router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) => {
     
     const {tokens} = req.body
 
