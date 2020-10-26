@@ -2,8 +2,6 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-// const {signRefreshToken} = require('../helpers/jwt')
 const userSchema = mongoose.Schema({
     createdAt: {
         type: Date,

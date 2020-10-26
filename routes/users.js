@@ -1,11 +1,11 @@
 const express = require('express')
 const User = require('../models/user')
-const {auth, authRole} = require('../helpers/auth')
+const {auth, authRole} = require('../helpers/authorize')
 const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
-const {signAccessToken, signRefreshToken} = require('../helpers/jwt')
+const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens')
 
 const router = express.Router()
 
