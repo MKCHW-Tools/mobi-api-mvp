@@ -24,7 +24,7 @@ exports.doctors = async (request, response) => {
         }
     }) */
 
-    const doctors = docs.map ( doc => {
+    const doctors = docs.filter( doc => {
         let {_id, createdAt, name, username, phone, roles, email} = doc
         if(roles.includes('doctor'))
             return {_id, createdAt, email, username, phone, roles, name }
