@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
             msg: 'Missing token'
         })
 
-    const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
+    const token = await req.header('Authorization') && req.header('Authorization').replace('Bearer ', '')
 
     if( !token ) 
         return res.status(403).json({
@@ -28,7 +28,7 @@ const auth = async (req, res, next) => {
     if(!owner)
         return res.status(401).json({
             'result':'Failure',
-            'msg': 'Invalid access Token'
+            'msg': 'Invalid Access Token'
         })
 
     jwt.verify(token, process.env.ACCESS_KEY_SECRET, async (err, verifiedJWT) => {
