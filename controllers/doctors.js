@@ -6,7 +6,7 @@ exports.doctors = async (request, response) => {
 
     if(!paginatedDocs) return response.status(404).send('Doctors not found')
 
-    const doctors = []
+    // const doctors = []
     const {docs} = paginatedDocs
 
 /*     docs.forEach( doc => {
@@ -24,7 +24,7 @@ exports.doctors = async (request, response) => {
         }
     }) */
 
-    doctors = docs.map ( doc => {
+    const doctors = docs.map ( doc => {
         let {_id, createdAt, name, username, phone, roles, email} = doc
         return {_id, createdAt, email, username, phone, roles, name }
     })
