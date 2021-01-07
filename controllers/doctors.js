@@ -6,23 +6,7 @@ exports.doctors = async (request, response) => {
 
     if(!paginatedDocs) return response.status(404).send('Doctors not found')
 
-    // const doctors = []
     const {docs} = paginatedDocs
-
-/*     docs.forEach( doc => {
-        let {_id, createdAt, name, username, phone, roles, email} = doc
-        if( roles.includes('doctors')) {
-            doctors.push({
-                createdAt,
-                _id,
-                username,
-                name,
-                phone,
-                email,
-                roles
-            })
-        }
-    }) */
 
     const doctors = docs.filter( doc => {
         let {_id, createdAt, name, username, phone, roles, email} = doc
@@ -36,5 +20,35 @@ exports.doctors = async (request, response) => {
         next,
         previous,
         doctors
+    })
+}
+
+exports.doctor = async (request, response) => {
+    
+    const {id} = request.params
+    
+    if(!id) return response.status(404).send('Not Found')
+
+    const profile = await User.getUser(id)
+
+    if(!profile) 
+        return response.status(404).json({
+            'result': 'Failure',
+            'msg': 'Profile Not Found'
+        })
+
+    const {createdAt, _id, username, name, email, phone, roles} = profile
+
+    response.status(200).send({
+        "result":"Success",
+        "profile": {
+            createdAt,
+            _id,
+            username,
+            name,
+            email,
+            phone,
+            roles
+        }
     })
 }
