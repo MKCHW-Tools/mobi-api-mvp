@@ -1,5 +1,6 @@
 const express = require('express')
 const doctors = require('../controllers/doctors')
+const User = require('../models/user')
 const {auth} = require('../helpers/authorize')
 const {canViewProfile} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
