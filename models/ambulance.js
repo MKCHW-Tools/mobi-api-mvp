@@ -5,7 +5,6 @@ const validator = require('validator')
 const ambulanceSchema = mongoose.Schema({
     user: {
         type: String,
-        required: true
     },
     createdAt: {
         type: Date,
@@ -14,26 +13,27 @@ const ambulanceSchema = mongoose.Schema({
     lastUpdatedAt: {
         type: Date,
     },
-    item: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    desciption: {
+    msdn: {
         type: String,
         trim: true
     },
-    currency: {
+    plate: {
+        type: String,
+        trim: true
+    },
+    hospital: {
         type: String,
         required: true,
     },
-    qty: {
-        type: Number,
-        required: true
+    driver: {
+        type: String,
     },
-    unit_cost: {
-        type: Number,
-    }
+    address: {
+        type: String,
+    },
+    cordinates: {
+        type: String,
+    },
 })
 
-module.exports =  mongoose.model( 'ambulance', ambulanceSchema )
+module.exports =  mongoose.model( 'Ambulance', ambulanceSchema )
