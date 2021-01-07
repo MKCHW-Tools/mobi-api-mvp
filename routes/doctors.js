@@ -3,7 +3,6 @@ const doctors = require('../controllers/doctors')
 const {auth} = require('../helpers/authorize')
 const {canViewProfile} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
-const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens')
 
 const router = express.Router()
 
