@@ -22,7 +22,9 @@ const validateToken = async (req, res, next) => {
         return res.status(401).json({
             'result': 'Failure',
             'msg': 'Invalid refresh token',
-            'owner':'Owner not returned'
+            'owner':'Owner not returned',
+            'user': owner,
+            'refresh': refreshToken
         })
 
     jwt.verify(refreshToken, process.env.REFRESH_KEY_SECRET, async (err, verifiedToken) => {
