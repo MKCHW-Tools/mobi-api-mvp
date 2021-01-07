@@ -26,7 +26,8 @@ exports.doctors = async (request, response) => {
 
     const doctors = docs.map ( doc => {
         let {_id, createdAt, name, username, phone, roles, email} = doc
-        return {_id, createdAt, email, username, phone, roles, name }
+        if(roles.includes('doctors'))
+            return {_id, createdAt, email, username, phone, roles, name }
     })
 
     return response.status(200).json({
