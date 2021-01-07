@@ -21,7 +21,8 @@ const validateToken = async (req, res, next) => {
     if(!owner)
         return res.status(401).json({
             'result': 'Failure',
-            'msg': 'Invalid refresh token'
+            'msg': 'Invalid refresh token',
+            'owner':'Owner not returned'
         })
 
     jwt.verify(refreshToken, process.env.REFRESH_KEY_SECRET, async (err, verifiedToken) => {
@@ -39,7 +40,8 @@ const validateToken = async (req, res, next) => {
         if(!verifiedOwner)
             return res.status(403).json({
                 'result': 'Failure',
-                'msg':'Invalid refresh token'
+                'msg':'Invalid refresh token',
+                verifiedToken
             })
 
         const ownerID = String(owner._id)
