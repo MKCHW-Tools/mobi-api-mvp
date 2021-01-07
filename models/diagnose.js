@@ -7,6 +7,25 @@ const diagnoseSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    patient: {
+        id: {
+            type: String
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        age: {
+            type: Number,
+        },
+        gender: {
+            type: String,
+            required: true
+        },
+        location: {
+            type: String
+        }
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -20,17 +39,20 @@ const diagnoseSchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    currency: {
-        type: String,
-        required: true,
-    },
     pregnant: {
         type: Number,
     },
     trimesters: [
         {
-            info: String,
-                
+            no: {
+                type: Number
+            },
+            info: {
+                type: String,
+            },
+            date: {
+                type: String
+            }   
         }
     ]
 })
