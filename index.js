@@ -19,6 +19,6 @@ app.use(tokenRouter)
 app.use(doctorRouter)
 app.use(ambulanceRouter)
 
-app.get('/', (req, res) => res.send(`Oooops!! Nothing here.`))
+app.get('/', (req, res) => res.send(`Hello from MobiKlinic`))
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))

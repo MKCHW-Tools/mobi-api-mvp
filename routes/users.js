@@ -9,7 +9,7 @@ const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens'
 
 const router = express.Router()
 
-router.post('/users/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     if(!req.body) return res.status(404).send({
         "result": "Failure",
         "msg": "Missing data"
@@ -45,7 +45,7 @@ router.post('/users/signup', async (req, res) => {
     })
 })
 
-router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
+router.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     if(!req.body) return res.status(404).send({
         "result": "Failure",
@@ -83,7 +83,7 @@ router.post('/users/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     })
 })
 
-router.post('/users/login', async function(req, res) {
+router.post('/login', async function(req, res) {
     
     const {phone, username, email, password} = req.body
 
@@ -139,7 +139,7 @@ const authProfileViewer = async (req, res, next) => {
     next()
 }
 
-router.get('/users/:id', auth, authProfileViewer, async (req, res) => {
+router.get('/:id', auth, authProfileViewer, async (req, res) => {
     
     const {id} = req.params
     
@@ -212,7 +212,7 @@ const authUpdateUser = async (req, res, next) => {
     next()
 }
 
-router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
+router.put('/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
@@ -248,7 +248,7 @@ router.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-router.delete('/users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
+router.delete('/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
@@ -284,7 +284,7 @@ router.delete('/users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res)
     
 })
 
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter( token => token.token != req.token)
         await req.user.save()
@@ -295,7 +295,7 @@ router.post('/users/logout', auth, async (req, res) => {
     }
 })
 
-router.post('/users/logout-all', auth, async (req, res) => {
+router.post('/logout-all', auth, async (req, res) => {
     try {
         req.user.tokens.splice(0, token => req.user.tokens.length)
         await req.user.save()
