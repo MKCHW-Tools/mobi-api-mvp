@@ -85,17 +85,17 @@ router.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
 
 router.post('/login', async function(req, res) {
     
-    const {phone, username, email, password} = req.body
+    const {username, password} = req.body
 
     try {
                 
-        if( !phone && !username && !email || !password)
+        if( !username && !password)
             return res.status(401).send({
                 "result": "Failure",
-                "msg": "Email or Phone or Username and password are required!"
+                "msg": "Username and password are required!"
             })
 
-        const user =  await User.findByCredentials(phone, email, username, password)
+        const user =  await User.findByCredentials(username, password)
 
         if ( !user )
             return res.status(401).send({

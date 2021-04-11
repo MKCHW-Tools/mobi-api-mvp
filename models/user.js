@@ -74,7 +74,7 @@ userSchema.statics.getUser = async id => {
     return user
 }
 
-userSchema.statics.findByCredentials = async function( phone = '', email = '', username = '', password = '' ) {
+userSchema.statics.findByCredentials = async function( username = '', password = '' ) {
 
     let user
 
@@ -97,7 +97,7 @@ userSchema.statics.findByCredentials = async function( phone = '', email = '', u
                 user = await User.findOne({username: username})
         }
 
-        if ( !user || user == null || user.length == 0 ) throw new Error( `User not found ${phone}, ${email}, ${username}` )
+        if ( !user || user == null || user.length == 0 ) throw new Error( `User not found ${username}` )
 
         const isPasswordMatch = await bcrypt.compare( password, user.password )
 
