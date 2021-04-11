@@ -76,7 +76,7 @@ userSchema.statics.getUser = async id => {
 
 userSchema.statics.findByCredentials = async function( username = '', password = '' ) {
 
-    let user
+    let user, err
 
 /*     if( email != '' ) {
         user = await User.findOne({email: email})
@@ -97,14 +97,20 @@ userSchema.statics.findByCredentials = async function( username = '', password =
                 user = await User.findOne({username: username})
         }
 
-        if ( !user || user == null || user.length == 0 ) throw new Error( `User not found ${username}` )
+        if ( !user || user == null || user.length == 0 ) {
+            err = `User not found ${username}`
+            //throw new Error( `User not found ${username}` )
+        }
 
         const isPasswordMatch = await bcrypt.compare( password, user.password )
 
-        if ( !isPasswordMatch ) throw new Error('Invalid login credentials')
+        if ( !isPasswordMatch ) {
+            err = 'Invalid login details'
+            //throw new Error('Invalid login credentials')
+        }
     }
 
-    return user
+    return {user,err}
 }
 
 userSchema.statics.update = async function(id, data) {
