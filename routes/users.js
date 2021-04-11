@@ -89,7 +89,7 @@ router.post('/login', async function(req, res) {
 
     try {
                 
-        if( !username && !password)
+        if( username == '' || password == '' )
             return res.status(401).send({
                 "result": "Failure",
                 "msg": "Username and password are required!"
