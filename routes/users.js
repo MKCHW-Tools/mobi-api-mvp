@@ -83,7 +83,7 @@ router.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     })
 })
 
-router.post('/login', async function(req, res) {
+router.post('/users/login', async function(req, res) {
     
     const {username, password} = req.body
 
