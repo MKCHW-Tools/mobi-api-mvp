@@ -76,18 +76,8 @@ userSchema.statics.getUser = async id => {
 
 userSchema.statics.findByCredentials = async function( username = '', password = '' ) {
 
-    let user, err
-
-/*     if( email != '' ) {
-        user = await User.findOne({email: email})
-
-    } else if( phone != '' ) {
-        user = await User.findOne({phone: phone})
-
-    } else if( username != '' ) {
-        user = await User.findOne({username: username})
-
-    } */
+    let user
+    
     if( username != '') {
         user = await User.findOne({email: username})
         if( !user || user == null ) {
