@@ -95,9 +95,9 @@ router.post('/login', async function(req, res) {
                 "msg": "Username and password are required!"
             })
 
-        const theUser =  await User.findByCredentials(username, password)
-        const {user, err} = theUser
-        
+        const user =  await User.findByCredentials(username, password)
+        const {err} = user
+
         if ( err )
             return res.status(401).send({
                 "result": "Failure",
