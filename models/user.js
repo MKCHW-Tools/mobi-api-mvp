@@ -110,7 +110,7 @@ userSchema.statics.findByCredentials = async function( username = '', password =
         }
     }
 
-    return {user,err}
+    return user
 }
 
 userSchema.statics.update = async function(id, data) {
