@@ -32,6 +32,8 @@ const auth = async (req, res, next) => {
         })
 
     jwt.verify(token, process.env.ACCESS_KEY_SECRET, async (err, verifiedJWT) => {
+
+        
         if(err instanceof jwt.TokenExpiredError) 
             return res.status(403).json({
                 'result': 'Failure',
@@ -49,7 +51,8 @@ const auth = async (req, res, next) => {
         if (!user) 
             return res.status(401).json({
                 'result': 'Failure',
-                'msg': 'Can not find user'
+                'msg': 'Can not find user',
+                verifiedJWT
             })
 
         const userID = String(user._id) 
