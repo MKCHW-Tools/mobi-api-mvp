@@ -7,6 +7,7 @@ const {paginate} = require('../helpers/pagination')
 const router = express.Router()
 
 router.get('/doctors/:id', auth, doctor)
-router.get('/doctors', auth, paginate(User), doctors)
+// router.get('/doctors', auth, paginate(User), doctors)
+router.get('/doctors', paginate(User), doctors)
 
 module.exports = router
