@@ -58,6 +58,7 @@ const auth = async (req, res, next) => {
                         'msg': 'Can not find user',
                         verifiedJWT
                     })
+            }
         }
 
         const userID = String(user._id) 
