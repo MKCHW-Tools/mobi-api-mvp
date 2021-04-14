@@ -98,11 +98,13 @@ router.post('/users/login', async function(req, res) {
         const user =  await User.findByCredentials(username, password)
         const {err} = user
 
-        if ( err )
+        if ( err ) {
+            
             return res.status(401).send({
                 "result": "Failure",
                 "msg": err
             })
+        }
 
         const accessToken = await signAccessToken({username})
         const refreshToken = await signRefreshToken({username})
@@ -140,7 +142,7 @@ const authProfileViewer = async (req, res, next) => {
     next()
 }
 
-router.get('/:id', auth, authProfileViewer, async (req, res) => {
+router.get('users/:id', auth, authProfileViewer, async (req, res) => {
     
     const {id} = req.params
     
@@ -213,7 +215,7 @@ const authUpdateUser = async (req, res, next) => {
     next()
 }
 
-router.put('/:id', auth, authUpdateUser, async (req, res) => {
+router.put('users/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
@@ -249,7 +251,7 @@ router.put('/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-router.delete('/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
+router.delete('users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
