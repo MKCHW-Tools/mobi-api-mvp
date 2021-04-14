@@ -21,4 +21,6 @@ app.use(ambulanceRouter)
 
 app.get('/', (req, res) => res.send(`Hello from MobiKlinic`))
 
+app.get('/david', (req, res) => res.send('David route') )
+
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))
