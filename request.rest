@@ -31,6 +31,6 @@ Accept: application/json
 }
 
 ### Get new route
-GET http://localhost:4600/david
+GET http://localhost:4600/doctors
 Content-Type: application/json
 Accept: application/json
