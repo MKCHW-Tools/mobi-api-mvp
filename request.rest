@@ -1,10 +1,15 @@
-POST https://mobi-app-api.herokuapp.com/users
-
+### Login
+POST https://mobi-app-api.herokuapp.com/users/login
 Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "David",
-    "email": "sam@gmail.com",
-    "password": "openly easy"
+    "username": "256706914861",
+    "password": "#4006@MHC"
 }
+
+### Refresh Tokens
+GET https://mobi-app-api.herokuapp.com/tokens/refresh
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjI1NjcwNjkxNDg2MSIsImlhdCI6MTYxODQwMjYwOCwiZXhwIjoxNjE5MDA3NDA4fQ.w_1jN9Z-3GsGdTueZHCf3LqiWL1RpU37vsXheUCDZy0

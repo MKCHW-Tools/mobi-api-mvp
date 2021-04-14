@@ -37,8 +37,16 @@ const validateToken = async (req, res, next) => {
 
         if(!verifiedToken) return res.status(403).send('You need to sign in')
 
-        const verifiedOwner = await User.findOne({username: verifiedToken.username})
+        const {uname : username} = verifiedToken
 
+        let verifiedOwner = await User.findOne({username: uname})
+
+        if(!verifiedOwner ) {
+            verifiedOwner = await User.findOne({phone: uname })
+            if(!verifiedOwner)
+                verifiedOwner = await User.findOne({email: uname })
+        }
+            
         if(!verifiedOwner)
             return res.status(403).json({
                 'result': 'Failure',
