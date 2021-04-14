@@ -3,21 +3,21 @@ const express = require('express')
 
 require('./db/db')
 
-const userRouter = require('./routes/users')
+/* const userRouter = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
 const noteRouter = require('./routes/notes')
 const doctorRouter = require('./routes/doctors')
-const ambulanceRouter = require('./routes/ambulances')
+const ambulanceRouter = require('./routes/ambulances') */
 
 const PORT = process.env.PORT || 4000
 
 const app = express()
 app.use(express.json())
 
-app.use(userRouter)
+/* app.use(userRouter)
 app.use(tokenRouter)
 app.use(doctorRouter)
-app.use(ambulanceRouter)
+app.use(ambulanceRouter) */
 
 app.get('/david', (req, res) => res.send('David route') )
 app.get('/', (req, res) => res.send(`Hello from MobiKlinic`))
