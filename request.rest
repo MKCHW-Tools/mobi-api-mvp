@@ -29,3 +29,8 @@ Accept: application/json
     "username": "256706914861",
     "password": "#4006@MHC"
 }
+
+### Get new route
+GET http://localhost:4600/david
+Content-Type: application/json
+Accept: application/json
