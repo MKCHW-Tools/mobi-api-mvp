@@ -13,3 +13,9 @@ GET https://mobi-app-api.herokuapp.com/tokens/refresh
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjI1NjcwNjkxNDg2MSIsImlhdCI6MTYxODQwMjYwOCwiZXhwIjoxNjE5MDA3NDA4fQ.w_1jN9Z-3GsGdTueZHCf3LqiWL1RpU37vsXheUCDZy0
+
+### Retrive Doctors
+GET https://mobi-app-api.herokuapp.com/doctors
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbG9uZ2UiLCJpYXQiOjE2MTg0MDQ0MzYsImV4cCI6MTYxODQwNDczNn0.fPTH_xW6OSOqB6LCuG2thZ0ib-kzkSlAEBx2vr-A5k4
