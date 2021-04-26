@@ -142,7 +142,7 @@ const authProfileViewer = async (req, res, next) => {
     next()
 }
 
-userRouter.get('users/:id', auth, authProfileViewer, async (req, res) => {
+userRouter.get('/users/:id', auth, authProfileViewer, async (req, res) => {
     
     const {id} = req.params
     
@@ -215,7 +215,7 @@ const authUpdateUser = async (req, res, next) => {
     next()
 }
 
-userRouter.put('users/:id', auth, authUpdateUser, async (req, res) => {
+userRouter.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
@@ -251,7 +251,7 @@ userRouter.put('users/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-userRouter.delete('users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
+userRouter.delete('/users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
