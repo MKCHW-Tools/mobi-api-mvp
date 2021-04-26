@@ -1,4 +1,4 @@
-const express = require('express')
+const {Router} = require('express')
 const User = require('../models/user')
 const {auth, authRole} = require('../helpers/authorize')
 const {canViewProfile, canUpdateUser} = require('../capabilities/users')
@@ -7,9 +7,9 @@ const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
 const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens')
 
-const router = express.Router()
+const userRouter = Router()
 
-router.post('/signup', async (req, res) => {
+userRouter.post('/signup', async (req, res) => {
     if(!req.body) return res.status(404).send({
         "result": "Failure",
         "msg": "Missing data"
@@ -45,7 +45,7 @@ router.post('/signup', async (req, res) => {
     })
 })
 
-router.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
+userRouter.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     if(!req.body) return res.status(404).send({
         "result": "Failure",
@@ -83,7 +83,7 @@ router.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     })
 })
 
-router.post('/users/login', async function(req, res) {
+userRouter.post('/users/login', async function(req, res) {
     
     const {username, password} = req.body
 
@@ -142,7 +142,7 @@ const authProfileViewer = async (req, res, next) => {
     next()
 }
 
-router.get('users/:id', auth, authProfileViewer, async (req, res) => {
+userRouter.get('users/:id', auth, authProfileViewer, async (req, res) => {
     
     const {id} = req.params
     
@@ -172,7 +172,7 @@ router.get('users/:id', auth, authProfileViewer, async (req, res) => {
     })
 })
 
-router.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
+userRouter.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
 
     const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = res
 
@@ -215,7 +215,7 @@ const authUpdateUser = async (req, res, next) => {
     next()
 }
 
-router.put('users/:id', auth, authUpdateUser, async (req, res) => {
+userRouter.put('users/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
@@ -251,7 +251,7 @@ router.put('users/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-router.delete('users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
+userRouter.delete('users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
@@ -287,7 +287,7 @@ router.delete('users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) 
     
 })
 
-router.post('/logout', auth, async (req, res) => {
+userRouter.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter( token => token.token != req.token)
         await req.user.save()
@@ -298,7 +298,7 @@ router.post('/logout', auth, async (req, res) => {
     }
 })
 
-router.post('/logout-all', auth, async (req, res) => {
+userRouter.post('/logout-all', auth, async (req, res) => {
     try {
         req.user.tokens.splice(0, token => req.user.tokens.length)
         await req.user.save()
@@ -309,4 +309,6 @@ router.post('/logout-all', auth, async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = {
+    userRouter
+}

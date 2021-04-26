@@ -3,7 +3,7 @@ const express = require('express')
 
 require('./db/db')
 
-const userRouter = require('./routes/users')
+const {userRouter} = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
 // const noteRouter = require('./routes/notes')
 const doctorRouter = require('./routes/doctors')

@@ -4,7 +4,7 @@ exports.ambulances = async (request, response) => {
 
     const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = response
 
-    if(!paginatedDocs) return response.status(404).send('ambulances not found')
+    if(!paginatedDocs) return response.status(404).send('Ambulances not found')
 
     const {docs: ambulances} = paginatedDocs
 

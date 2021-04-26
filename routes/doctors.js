@@ -8,14 +8,5 @@ const router = express.Router()
 
 router.get('/doctors/:id', auth, doctor)
 router.get('/doctors', auth, paginate(User), doctors)
-/* router.get('/doctors', async (req, res) => 
-    res.status(200).json({
-        "result":"Success",
-        "doctors": [
-        'David',
-        'John',
-        'Joan'
-    ]})
-) */
 
 module.exports = router
