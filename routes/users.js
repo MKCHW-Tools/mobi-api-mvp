@@ -9,7 +9,7 @@ const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens'
 
 const userRouter = Router()
 
-userRouter.post('/signup', async (req, res) => {
+userRouter.post('/', async (req, res) => {
     if(!req.body) return res.status(404).send({
         "result": "Failure",
         "msg": "Missing data"
@@ -83,7 +83,7 @@ userRouter.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     })
 })
 
-userRouter.post('/users/login', async function(req, res) {
+userRouter.post('/login', async function(req, res) {
     
     const {username, password} = req.body
 
@@ -142,7 +142,7 @@ const authProfileViewer = async (req, res, next) => {
     next()
 }
 
-userRouter.get('/users/:id', auth, authProfileViewer, async (req, res) => {
+userRouter.get('/:id', auth, authProfileViewer, async (req, res) => {
     
     const {id} = req.params
     
@@ -215,7 +215,7 @@ const authUpdateUser = async (req, res, next) => {
     next()
 }
 
-userRouter.put('/users/:id', auth, authUpdateUser, async (req, res) => {
+userRouter.put('/:id', auth, authUpdateUser, async (req, res) => {
     const {id} = req.params
     
     if( !id ) return res.status(500).send('Missing ID')
@@ -251,7 +251,7 @@ userRouter.put('/users/:id', auth, authUpdateUser, async (req, res) => {
     
 })
 
-userRouter.delete('/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
+userRouter.delete('/:id', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
     const id = req.params.id
     
@@ -287,7 +287,6 @@ userRouter.delete('/delete/:id', auth, authRole(ROLES.ADMIN), async (req, res) =
     
 })
 
-userRouter.get('/exams',(req, res) => res.status(200).send('Testing') )
 userRouter.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter( token => token.token != req.token)

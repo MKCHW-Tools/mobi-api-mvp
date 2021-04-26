@@ -4,9 +4,11 @@ const Ambulance = require('../models/ambulance')
 const {auth} = require('../helpers/authorize')
 const {paginate} = require('../helpers/pagination')
 
-const router = express.Router()
+const ambulanceRouter = express.Router()
 
-router.get('/ambulances/:id', auth, ambulance)
-router.get('/ambulances', auth, paginate(Ambulance), ambulances)
+ambulanceRouter.get('/:id', auth, ambulance)
+ambulanceRouter.get('/', auth, paginate(Ambulance), ambulances)
 
-module.exports = router
+module.exports = {
+    ambulanceRouter
+}

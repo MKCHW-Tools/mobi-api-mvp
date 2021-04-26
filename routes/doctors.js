@@ -4,9 +4,11 @@ const User = require('../models/user')
 const {auth} = require('../helpers/authorize')
 const {paginate} = require('../helpers/pagination')
 
-const router = express.Router()
+const doctorRouter = express.Router()
 
-router.get('/doctors/:id', auth, doctor)
-router.get('/doctors', auth, paginate(User), doctors)
+doctorRouter.get('/:id', auth, doctor)
+doctorRouter.get('/', auth, paginate(User), doctors)
 
-module.exports = router
+module.exports = {
+    doctorRouter
+}
