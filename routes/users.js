@@ -172,7 +172,7 @@ userRouter.get('/users/:id', auth, authProfileViewer, async (req, res) => {
     })
 })
 
-userRouter.get('/users', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
+userRouter.get('/', auth, authRole(ROLES.ADMIN), paginate(User), async (req, res) => {
 
     const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = res
 
