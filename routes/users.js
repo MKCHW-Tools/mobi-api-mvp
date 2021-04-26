@@ -287,7 +287,7 @@ userRouter.delete('/users/delete/:id', auth, authRole(ROLES.ADMIN), async (req, 
     
 })
 
-userRouter.get('/exams',(req, res) => res.status(200).send('Testing') )
+userRouter.get('/users/exams',(req, res) => res.status(200).send('Testing') )
 userRouter.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter( token => token.token != req.token)
