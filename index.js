@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 4000
 const app = express()
 app.use(express.json())
 
-app.use(userRouter)
+app.use('users/', userRouter)
 app.use(tokenRouter)
 app.use(doctorRouter)
 app.use(ambulanceRouter)
