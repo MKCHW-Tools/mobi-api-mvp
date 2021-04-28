@@ -5,7 +5,6 @@ require('./db/db')
 
 const {userRouter} = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
-// const noteRouter = require('./routes/notes')
 const {doctorRouter} = require('./routes/doctors')
 const {ambulanceRouter} = require('./routes/ambulances')
 

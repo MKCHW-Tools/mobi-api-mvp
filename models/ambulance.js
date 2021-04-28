@@ -13,6 +13,7 @@ const ambulanceSchema = mongoose.Schema({
     lastUpdatedAt: {
         type: Date,
     },
+    
     msdn: {
         type: String,
         trim: true

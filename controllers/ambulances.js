@@ -1,4 +1,4 @@
-const User = require('../models/user')
+const Ambulance = require('../models/ambulance')
 
 exports.ambulances = async (request, response) => {
 
@@ -23,7 +23,7 @@ exports.ambulance = async (request, response) => {
     
     if(!id) return response.status(404).send('Not Found')
 
-    const profile = await User.getUser(id)
+    const profile = await Ambulance.getUser(id)
 
     if(!profile) 
         return response.status(404).json({

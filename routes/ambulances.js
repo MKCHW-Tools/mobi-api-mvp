@@ -8,6 +8,9 @@ const ambulanceRouter = express.Router()
 
 ambulanceRouter.get('/:id', auth, ambulance)
 ambulanceRouter.get('/', auth, paginate(Ambulance), ambulances)
+ambulanceRouter.post('/add', auth)
+ambulanceRouter.put('/:id', auth)
+ambulanceRouter.delete('/:id', auth)
 
 module.exports = {
     ambulanceRouter
