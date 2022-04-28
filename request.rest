@@ -33,3 +33,7 @@ Accept: application/json
 GET http://localhost:4600/doctors
 Content-Type: application/json
 Accept: application/json
+### Get chats
+GET http://localhost:4600/chats
+Content-Type: application/json
+Accept: application/json

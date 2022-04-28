@@ -1,5 +1,5 @@
 const express = require('express')
-const {chats, chat} = require('../controllers/ambulances')
+const {chats, chat} = require('../controllers/chats')
 const Chat = require('../models/chat')
 const {auth} = require('../helpers/authorize')
 const {paginate} = require('../helpers/pagination')

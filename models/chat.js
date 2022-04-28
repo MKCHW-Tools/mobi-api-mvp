@@ -37,11 +37,11 @@ const chatSignature = {
                 type: String,
                 required: true
             }
-        },
-        threads: [threadSchema]
+        }
 }
 
 const threadSchema = new mongoose.Schema(threadSignature,{timestamps: true});
+chatSignature['thread'] = [threadSchema]
 const chatSchema = mongoose.Schema(chatSignature, {timestamp: true})
 
 chatSchema.statics.getChats = async () => {

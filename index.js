@@ -7,6 +7,7 @@ const {userRouter} = require('./routes/users')
 const tokenRouter = require('./routes/tokens')
 const {doctorRouter} = require('./routes/doctors')
 const {ambulanceRouter} = require('./routes/ambulances')
+const {chatRouter} = require('./routes/chats')
 
 const PORT = process.env.PORT || 4000
 
@@ -17,6 +18,7 @@ app.use('/users', userRouter)
 app.use(tokenRouter)
 app.use('/doctors', doctorRouter)
 app.use('/ambulances', ambulanceRouter)
+app.use('/chats', chatRouter)
 
 app.get('/', (req, res) => res.send(`Hello from MobiKlinic`))
 
