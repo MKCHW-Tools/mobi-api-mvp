@@ -15,7 +15,7 @@ const router = express.Router()
 // Return tokens
 
 router.get('/tokens/refresh', validateToken, async (req, res) => {
-    const {owner} = req
+    const { owner } = req
 
     if(!owner) {
         return res.status(403).json({
@@ -28,23 +28,23 @@ router.get('/tokens/refresh', validateToken, async (req, res) => {
 
     newAccessToken = await signAccessToken({username})
     newRefreshToken = await signRefreshToken({username})
-    
+
     const updated = await User.update(_id, {accessToken: newAccessToken, refreshToken: newRefreshToken})
 
-    if(updated._id) 
+    if(updated._id)
         return res.status(201).json({
             'result' : 'Success',
             'accessToken' : newAccessToken,
             'refreshToken' : newRefreshToken,
 
         })
-    
+
     return res.status(404).json({
         'result' : 'Failure',
         'msg' : 'Refreshing tokens failed'
 
     })
-    
+
 })
 
 const authInvalidateTokens = async (req, res, next) => {
@@ -54,8 +54,8 @@ const authInvalidateTokens = async (req, res, next) => {
             'result': 'Failure',
             'msg':'Login to perform the action'
         })
-    
-    if(!canInvalidateTokens(req.user, req.params.id)) 
+
+    if(!canInvalidateTokens(req.user, req.params.id))
         return res.status(403).json({
             'result': 'Failure',
             'msg': 'Not Authorized to perform action'
@@ -65,15 +65,15 @@ const authInvalidateTokens = async (req, res, next) => {
 }
 
 router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) => {
-    
+
     const {tokens} = req.body
 
-    if(tokens !== undefined && tokens.length <= 0) 
+    if(tokens !== undefined && tokens.length <= 0)
         return res.status(404).json({
             'result':'Failure',
             'msg':'Tokens not supplied'
         })
-    
+
     tokens.forEach(async token => {
 
         const {accessToken, refreshToken} = token
@@ -94,7 +94,7 @@ router.post('/tokens/in-validate', auth, authInvalidateTokens, async (req, res) 
         'result':'Success',
         'msg': 'Tokens invalidated'
     })
-    
+
 })
 
 module.exports = router

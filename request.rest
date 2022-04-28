@@ -12,15 +12,14 @@ Accept: application/json
 GET https://mobi-app-api.herokuapp.com/tokens/refresh
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjI1NjcwNjkxNDg2MSIsImlhdCI6MTYxODQwNjYyOCwiZXhwIjoxNjE5MDExNDI4fQ.zoi_eJxODvgSxpj74pqxQ79hbRM5AR_bGwozsAkW0VU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjI1NjcwNjkxNDg2MSIsImlhdCI6MTYzNTE2OTg1MSwiZXhwIjoxNjM3NzYxODUxfQ.sNrtCYUeF9sH8NCXjz431ccmFq4As6FCft108jEtOHI
 
 ### Retrive Doctors
 GET https://mobi-app-api.herokuapp.com/doctors
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjI1NjcwNjkxNDg2MSIsImlhdCI6MTYxODQwODkyOSwiZXhwIjoxNjE4NDA5MjI5fQ.5nRD-vGYie8A0ApPjflYlXLR-kNU4S5vMkS3YJllm1I
-
-### Localhost 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbG9uZ2UiLCJpYXQiOjE2MzUxNjk5MjAsImV4cCI6MTYzNTc3NDcyMH0.QNCQ6UnZtzvfwkp0JIVPpocrUi5ovqd6W8M2cjsD5sc
+### Localhost
 POST http://localhost:4600/users/login
 Content-Type: application/json
 Accept: application/json
