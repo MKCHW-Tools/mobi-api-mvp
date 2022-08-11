@@ -1,3 +1,6 @@
 /node_modules
 request.rest
 .DS_Store
+*.rest
+.env
+.env.local
