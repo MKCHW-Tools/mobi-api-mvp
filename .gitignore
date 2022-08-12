@@ -4,3 +4,9 @@ node_modules
 .env
 .env.local
 .env.development
+routes/notes.js
+routes/expenses.js
+models/expense.js
+models/note.js
+models/saving.js
+models/loan.js
