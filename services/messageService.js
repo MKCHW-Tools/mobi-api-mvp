@@ -6,8 +6,6 @@ module.exports = {
   createMessage: (newMesage) => {
     return new Promise((resolve, reject) => {
       Message.create(newMesage)
-
-        // .populate("chat")
         .then((result) => {
           result = result.populate("sender", "name avator").populate("chat");
 
@@ -35,6 +33,22 @@ module.exports = {
         })
         .catch((err) => {
           console.log("error in updating latest message", err);
+          reject(err);
+        });
+    });
+  },
+
+  getAllMessages: (chatId) => {
+    return new Promise((resolve, reject) => {
+      Message.find({ chat: chatId })
+        .populate("sender", "name avator email")
+        .populate("chat")
+        .then((result) => {
+          console.log("get  message result ", result);
+          resolve(result);
+        })
+        .catch((err) => {
+          console.log("error in getting all messages", err);
           reject(err);
         });
     });

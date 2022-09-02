@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const {
   createMessage,
   updateLatestMessage,
+  getAllMessages: getAllChatMessages,
 } = require("../services/messageService");
 
 module.exports = {
@@ -31,6 +32,21 @@ module.exports = {
 
       if (message) {
         res.json(message);
+      }
+    } catch (error) {
+      res.status(400);
+      throw new Error(error.message);
+    }
+  }),
+
+  getAllMessages: asyncHandler(async (req, res) => {
+    const chatId = req.params.chatId;
+    try {
+      const messages = await getAllChatMessages(chatId);
+      if (chatId) {
+        res.status(200).json(messages);
+      } else {
+        res.status(400).send("Messages not found");
       }
     } catch (error) {
       res.status(400);

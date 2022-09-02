@@ -23,7 +23,7 @@ module.exports ={
         } else {
             var chatData = {
                 chatName: "sender",
-                users: [req.user._id, userId]
+                users: userId
             };
 
             try{
