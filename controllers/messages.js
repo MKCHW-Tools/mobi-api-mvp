@@ -8,7 +8,7 @@ const {
 
 module.exports = {
   sendMessage: asyncHandler(async (req, res) => {
-    const { content, chatId } = req.body;
+    const { content, chatId, image } = req.body;
     console.log("Request Body", req.body);
 
     if (!content || !chatId) {
@@ -16,11 +16,20 @@ module.exports = {
       return res.sendStatus(400);
     }
 
-    const newMessage = {
-      sender: req.user._id,
-      content: content,
-      chat: chatId,
-    };
+   
+
+    const newMessage = image
+      ? {
+          sender: req.user._id,
+          content: content,
+          chat: chatId,
+          image: image,
+        }
+      : {
+          sender: req.user._id,
+          content: content,
+          chat: chatId,
+        };
 
     try {
       var message = await createMessage(newMessage);
