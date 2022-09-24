@@ -20,11 +20,12 @@ userRouter.post('/', async (req, res) => {
 
     accessToken = await signAccessToken({uname})
     refreshToken = await signRefreshToken({uname})
-
+    
     req.body.accessToken = accessToken
     req.body.refreshToken = refreshToken
 
     const user = new User(req.body)
+    console.log(user, "User");
     await user.save()
 
     const {createdAt, _id, username, name, email, phone, roles} = user
@@ -44,6 +45,8 @@ userRouter.post('/', async (req, res) => {
         "refreshToken": refreshToken
     })
 })
+
+
 
 userRouter.post('/add', auth, authRole(ROLES.ADMIN), async (req, res) => {
     
