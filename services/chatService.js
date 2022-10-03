@@ -66,19 +66,18 @@ module.exports = {
 
   findAllSortedChats: (criteria) => {
     return new Promise((resolve, reject) => {
+      // Chat.find({ users: { $elemMatch: { $eq: req.user._id } } });
       Chat.find({
-        $and: [
-          { users: { $elemMatch: { $eq: criteria._id } } },
-        ],
+        users: { $elemMatch: { $eq: criteria._id } },
       })
         .populate("users", "-password")
         .populate("latestMessage")
-        .sort({updatedAt: -1})
+        .sort({ updatedAt: -1 })
         .then((result) => {
           result = User.populate(result, {
-            path:"latestMessage.sender",
-            select: "name avator email"
-          })
+            path: "latestMessage.sender",
+            model: "Message",
+          });
           console.log("Result", result);
           resolve(result);
         })

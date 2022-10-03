@@ -22,7 +22,7 @@ module.exports ={
             res.send(isChat[0])
         } else {
             var chatData = {
-                chatName: "sender",
+                chatName: "chat",
                 users: userId
             };
 
@@ -38,11 +38,13 @@ module.exports ={
     }),
 
     fetchChats: asyncHandler(async(req, res)=>{
-        const criteria = req.user._id
+       
+        console.log("request", req.user._id);
+        const criteria = req.user
         try{
             const getAllChats = await findAllSortedChats(criteria)
             if(getAllChats){
-                res.status(200).send(getAllChats);
+               return res.status(200).send(getAllChats);
             }
         }catch (error){
             res.status(400)
