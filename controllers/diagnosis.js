@@ -76,7 +76,7 @@ exports.diagnosisUpdate = async (request, response) => {
 exports.diagnosisDestroy = async (request, response) => {
 	const { _id: userId } = request.user;
 	if (!userId)
-		return response.status(400).send("Not allowed to update this!");
+		return response.status(400).send("Not allowed to update this! ");
 	const { id } = request.params;
 	const result = await Diagnosis.deleteOne({ user: userId, _id: id });
 
