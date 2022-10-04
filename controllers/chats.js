@@ -19,7 +19,7 @@ module.exports = {
 			return res.sendStatus(400);
 		}
 
-		let isChat = await findAllCharts(userId, req.user._id);
+		let isChat = await findAllChats(userId, req.user._id);
 		console.log("isChat", isChat);
 		isChat = await populateChatWithUserDetails(isChat);
 
@@ -34,7 +34,7 @@ module.exports = {
 
 			try {
 				const createdChat = await createChat(chatData);
-				const fullChat = await findChart(createdChat);
+				const fullChat = await findChat(createdChat);
 				res.status(200).json(fullChat);
 			} catch (error) {
 				res.status(400);

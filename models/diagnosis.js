@@ -8,10 +8,10 @@ const diagnosisSchema = mongoose.Schema({
 		ref: "User",
 	},
 	patient: {
-		id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-		},
+		// id: {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: "User",
+		// },
 		name: {
 			type: String,
 			required: true,
@@ -62,4 +62,14 @@ diagnosisSchema.statics.getDetail = async (id) => {
 	const diagnosis = await Diagnosis.findOne({ _id: id });
 	return diagnosis;
 };
-module.exports = mongoose.model("Diagnosis", diagnosisSchema);
+
+diagnosisSchema.statics.getDiagnosisByUser = async (userId, id) => {
+	console.log("userID", userId);
+	console.log("ResourceID", id);
+	const diagnosis = await Diagnosis.findOne({ user: userId, _id: id });
+
+	return diagnosis;
+};
+
+const Diagnosis = mongoose.model("Diagnosis", diagnosisSchema);
+module.exports = Diagnosis;
