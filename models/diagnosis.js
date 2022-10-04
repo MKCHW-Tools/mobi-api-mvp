@@ -4,12 +4,13 @@ const validator = require("validator");
 
 const diagnosisSchema = mongoose.Schema({
 	user: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
 	},
 	patient: {
 		id: {
-			type: String,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
 		},
 		name: {
 			type: String,
@@ -57,4 +58,8 @@ const diagnosisSchema = mongoose.Schema({
 	],
 });
 
+diagnosisSchema.statics.getDetail = async (id) => {
+	const diagnosis = await Diagnosis.findOne({ _id: id });
+	return diagnosis;
+};
 module.exports = mongoose.model("Diagnosis", diagnosisSchema);
