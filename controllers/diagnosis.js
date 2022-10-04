@@ -26,7 +26,7 @@ exports.diagnosisDetail = async (request, response) => {
 
 	if (!id) return response.status(404).send("Not Found");
 
-	const diagnosis = await Diagnosis.getDetails(id);
+	const diagnosis = await Diagnosis.getDetail(id);
 
 	if (!diagnosis)
 		return response.status(404).json({
@@ -34,18 +34,20 @@ exports.diagnosisDetail = async (request, response) => {
 			msg: "Details for a diagnosis are Not Found",
 		});
 
-	const { createdAt, _id, username, name, email, phone, roles } = profile;
+	const {} = diagnosis;
 
 	response.status(200).send({
 		result: "Success",
-		profile: {
-			createdAt,
-			_id,
-			username,
-			name,
-			email,
-			phone,
-			roles,
+		diagnosis: {
+			diagnosis: {
+				user,
+				patient,
+				createdAt,
+				lastUpdatedAt,
+				details,
+				pregnant,
+				trimesters,
+			},
 		},
 	});
 };
