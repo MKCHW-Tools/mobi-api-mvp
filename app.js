@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-
 require('./db/db')
 
 const {userRouter} = require('./routes/users')
@@ -10,7 +9,6 @@ const {ambulanceRouter} = require('./routes/ambulances')
 const {chatRouter} = require('./routes/chats')
 const {messageRouter} = require('./routes/messages')
 
-const PORT = process.env.PORT || 4000
 
 const app = express()
 app.use(express.json())
@@ -24,4 +22,6 @@ app.use("/messages", messageRouter);
 
 app.get('/', (req, res) => res.send(`Hello from MobiKlinic`))
 
-app.listen(PORT, () => console.log(`Server running on ${PORT}`))
+
+
+module.exports = app

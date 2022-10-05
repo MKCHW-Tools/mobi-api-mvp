@@ -5,11 +5,13 @@ const {canViewProfile, canUpdateUser} = require('../capabilities/users')
 const {paginate} = require('../helpers/pagination')
 const {ROLES} = require('../helpers/roles')
 const bcrypt = require('bcrypt')
+const asyncHandler = require("express-async-handler");
+
 const {signAccessToken, signRefreshToken} = require('../helpers/generate.tokens')
 
 const userRouter = Router()
 
-userRouter.post('/', async (req, res) => {
+userRouter.post('/', asyncHandler( async (req, res) => {
     if(!req.body) return res.status(404).send({
         "result": "Failure",
         "msg": "Missing data"
@@ -44,7 +46,7 @@ userRouter.post('/', async (req, res) => {
         "accessToken": accessToken,
         "refreshToken": refreshToken
     })
-})
+}))
 
 
 
