@@ -11,8 +11,6 @@ const { diagnosisRouter } = require("./routes/diagnosis");
 const { chatRouter } = require("./routes/chats");
 const { messageRouter } = require("./routes/messages");
 
-const PORT = process.env.PORT || 4000;
-
 const app = express();
 app.use(express.json());
 
@@ -26,4 +24,4 @@ app.use("/messages", messageRouter);
 
 app.get("/", (req, res) => res.send(`Hello from MobiKlinic`));
 
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+module.exports = app;
