@@ -24,6 +24,6 @@ app.use("/ambulances", ambulanceRouter);
 app.use("/chats", chatRouter);
 app.use("/messages", messageRouter);
 
-app.get("/", (req, res) => res.send(`Hello from MobiKlinic`));
+app.get("/", (req, res) => res.send(`Oops It's MobiKlinic`));
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
