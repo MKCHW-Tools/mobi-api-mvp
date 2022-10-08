@@ -54,6 +54,14 @@ const diagnosisSchema = mongoose.Schema({
 			details: {
 				type: String,
 			},
+			media: [
+				{
+					filename: String,
+					filetype: String,
+					base64: String,
+					url: String,
+				},
+			],
 			date: {
 				type: String,
 			},
