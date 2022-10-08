@@ -45,6 +45,9 @@ const diagnosisSchema = mongoose.Schema({
 	},
 	followup: [
 		{
+			date: {
+				type: Date,
+			},
 			order: {
 				type: Number,
 			},
@@ -62,9 +65,6 @@ const diagnosisSchema = mongoose.Schema({
 					url: String,
 				},
 			],
-			date: {
-				type: String,
-			},
 		},
 	],
 });
