@@ -26,6 +26,9 @@ const diagnosisSchema = mongoose.Schema({
 		location: {
 			type: String,
 		},
+		phone: {
+			type: String,
+		},
 	},
 	createdAt: {
 		type: Date,
@@ -41,7 +44,8 @@ const diagnosisSchema = mongoose.Schema({
 		trim: true,
 	},
 	pregnant: {
-		type: Number,
+		type: Boolean,
+		default: false,
 	},
 	followup: [
 		{
