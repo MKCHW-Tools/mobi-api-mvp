@@ -43,12 +43,15 @@ const diagnosisSchema = mongoose.Schema({
 	pregnant: {
 		type: Number,
 	},
-	trimesters: [
+	followup: [
 		{
-			no: {
+			order: {
 				type: Number,
 			},
-			info: {
+			type: {
+				type: String,
+			},
+			details: {
 				type: String,
 			},
 			date: {

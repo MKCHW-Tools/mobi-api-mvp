@@ -121,7 +121,6 @@ userRouter.post("/login", async function (req, res) {
 		if (updated._id)
 			return res.status(200).send({
 				result: "Success",
-				user_id: updated._id,
 				accessToken,
 				refreshToken,
 			});
