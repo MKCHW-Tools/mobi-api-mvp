@@ -1,8 +1,8 @@
 const http = require("http");
-const app = require("./app");
+const appServer = require("./app");
 const PORT = process.env.PORT || 4000;
 
-const server = http.createServer(app);
+const server = http.createServer(appServer);
 const io = require("socket.io")(server, {
   pingTimeout: 6000,
   cors: {
