@@ -7,9 +7,13 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			Chat.find({
 				$and: [
+					// the user themselves is at least in the chat
 					{ users: { $elemMatch: { $eq: criteria._id } } },
-					{ users: { $elemMatch: { $eq: userId } } },
-				],
+					// here, userId is a list of the id of participating users
+					...userId.map( _id => (
+						{ users: { $elemMatch: { $eq: _id } } }
+					))
+				]
 			})
 				.populate("users", "-password")
 				.populate("latestMessage")
