@@ -8,10 +8,9 @@ exports.doctors = async (request, response) => {
 
     const {docs} = paginatedDocs
 
-    const doctors = docs.filter( doc => {
+    const doctors = docs.filter( doc => doc.roles.includes('doctor') ).map( doc => {
         let {_id, createdAt, name, username, phone, roles, email} = doc
-        if(roles.includes('doctor'))
-            return {_id, createdAt, email, username, phone, roles, name }
+        return {_id, createdAt, email, username, phone, roles, name }
     })
 
     return response.status(200).json({
