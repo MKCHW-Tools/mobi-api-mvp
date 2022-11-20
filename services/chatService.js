@@ -7,18 +7,22 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			Chat.find({
 				$and: [
+					// the user themselves is at least in the chat
 					{ users: { $elemMatch: { $eq: criteria._id } } },
-					{ users: { $elemMatch: { $eq: userId } } },
-				],
+					// here, userId is a list of the id of participating users
+					...userId.map( _id => (
+						{ users: { $elemMatch: { $eq: _id } } }
+					))
+				]
 			})
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.populate("latestMessage")
 				.then((result) => {
 					console.log("Result", result);
 					resolve(result);
 				})
 				.catch((err) => {
-					console.log("Error on geting chat details", err);
+					console.log("Error on getting chat details", err);
 					reject(err);
 				});
 		});
@@ -54,7 +58,7 @@ module.exports = {
 	findChat: (chat) => {
 		return new Promise((resolve, reject) => {
 			Chat.findOne({ _id: chat._id })
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.then((result) => {
 					resolve(result);
 				})
@@ -70,7 +74,7 @@ module.exports = {
 			Chat.find({
 				users: { $elemMatch: { $eq: criteria._id } },
 			})
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.populate("latestMessage")
 				.sort({ updatedAt: -1 })
 				.then((result) => {
@@ -82,7 +86,7 @@ module.exports = {
 					resolve(result);
 				})
 				.catch((err) => {
-					console.log("Error on geting chat details", err);
+					console.log("Error on getting chat details", err);
 					reject(err);
 				});
 		});
