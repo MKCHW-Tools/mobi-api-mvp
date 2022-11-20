@@ -15,14 +15,14 @@ module.exports = {
 					))
 				]
 			})
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.populate("latestMessage")
 				.then((result) => {
 					console.log("Result", result);
 					resolve(result);
 				})
 				.catch((err) => {
-					console.log("Error on geting chat details", err);
+					console.log("Error on getting chat details", err);
 					reject(err);
 				});
 		});
@@ -58,7 +58,7 @@ module.exports = {
 	findChat: (chat) => {
 		return new Promise((resolve, reject) => {
 			Chat.findOne({ _id: chat._id })
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.then((result) => {
 					resolve(result);
 				})
@@ -74,7 +74,7 @@ module.exports = {
 			Chat.find({
 				users: { $elemMatch: { $eq: criteria._id } },
 			})
-				.populate("users", "-password")
+				.populate("users", "name avatar email")
 				.populate("latestMessage")
 				.sort({ updatedAt: -1 })
 				.then((result) => {
@@ -86,7 +86,7 @@ module.exports = {
 					resolve(result);
 				})
 				.catch((err) => {
-					console.log("Error on geting chat details", err);
+					console.log("Error on getting chat details", err);
 					reject(err);
 				});
 		});
