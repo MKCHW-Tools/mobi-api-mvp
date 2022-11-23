@@ -11,7 +11,7 @@ module.exports = {
 		const { content, chatId, image } = req.body;
 		console.log("Request Body", req.body);
 
-		if (!content || !chatId) {
+		if ((!content && !image) || !chatId) {
 			console.log("Invalid data passed into request");
 			return res.sendStatus(400);
 		}
