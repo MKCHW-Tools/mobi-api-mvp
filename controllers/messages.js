@@ -5,6 +5,7 @@ const {
 	updateLatestMessage,
 	getAllMessages: getAllChatMessages,
 } = require("../services/messageService");
+const {uploadImage} = require("../helpers/storage");
 
 module.exports = {
 	sendMessage: asyncHandler(async (req, res) => {
@@ -21,7 +22,7 @@ module.exports = {
 					sender: req.user._id,
 					content: content,
 					chat: chatId,
-					image: image,
+					image: await uploadImage(new Buffer(image, 'base64'), "for-chat/"),
 			  }
 			: {
 					sender: req.user._id,
