@@ -1,7 +1,7 @@
 const User = require('../models/user')
 
 exports.doctors = async (request, response) => {
-
+// #swagger.tags = ['Doctors']
     const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = response
 
     if(!paginatedDocs) return response.status(404).send('Doctors not found')
@@ -23,14 +23,14 @@ exports.doctors = async (request, response) => {
 }
 
 exports.doctor = async (request, response) => {
-    
+    // #swagger.tags = ['Doctors']
     const {id} = request.params
-    
+
     if(!id) return response.status(404).send('Not Found')
 
     const profile = await User.getUser(id)
 
-    if(!profile) 
+    if(!profile)
         return response.status(404).json({
             'result': 'Failure',
             'msg': 'Profile Not Found'

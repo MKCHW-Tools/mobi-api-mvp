@@ -10,6 +10,7 @@ const {
 
 module.exports = {
 	accessChat: asyncHandler(async (req, res) => {
+		// #swagger.tags = ['Chat']
 		const { userId } = req.body;
 		console.log("userId", userId);
 		console.log("request", req.user._id);
@@ -44,6 +45,7 @@ module.exports = {
 	}),
 
 	fetchChats: asyncHandler(async (req, res) => {
+		// #swagger.tags = ['Chat']
 		console.log("request", req.user._id);
 		const criteria = req.user;
 		try {

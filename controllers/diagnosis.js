@@ -1,6 +1,7 @@
 const Diagnosis = require("../models/diagnosis");
 
 exports.diagnosis = async (request, response) => {
+	// #swagger.tags = ['Diagnosis']
 	const {
 		total,
 		paginatedDocs: { next = 0 },
@@ -22,6 +23,7 @@ exports.diagnosis = async (request, response) => {
 };
 
 exports.diagnosisDetail = async (request, response) => {
+	// #swagger.tags = ['Diagnosis']
 	const { id } = request.params;
 
 	if (!id) return response.status(404).send("Not Found");
@@ -40,6 +42,7 @@ exports.diagnosisDetail = async (request, response) => {
 	});
 };
 exports.diagnosisNew = async function (req, res) {
+	// #swagger.tags = ['Diagnosis']
 	const { _id } = req.user;
 
 	req.body.user = _id;
@@ -53,6 +56,7 @@ exports.diagnosisNew = async function (req, res) {
 };
 
 exports.diagnosisUpdate = async (request, response) => {
+	// #swagger.tags = ['Diagnosis']
 	const { _id: userId } = request.user;
 	if (!userId) return response.status(400).send("Not allowed to update this");
 	const { id } = request.params;
@@ -74,6 +78,7 @@ exports.diagnosisUpdate = async (request, response) => {
 };
 
 exports.diagnosisDestroy = async (request, response) => {
+	// #swagger.tags = ['Diagnosis']
 	const { _id: userId } = request.user;
 	if (!userId)
 		return response.status(400).send("Not allowed to update this! ");

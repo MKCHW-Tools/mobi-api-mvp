@@ -1,7 +1,7 @@
 const Ambulance = require('../models/ambulance')
 
 exports.ambulances = async (request, response) => {
-
+    // #swagger.tags = ['Ambulances']
     const {total, paginatedDocs:{next = 0}, paginatedDocs:{previous = 0}, paginatedDocs} = response
 
     if(!paginatedDocs) return response.status(404).send('Ambulances not found')
@@ -18,14 +18,14 @@ exports.ambulances = async (request, response) => {
 }
 
 exports.ambulance = async (request, response) => {
-    
+// #swagger.tags = ['Ambulances']
     const {id} = request.params
-    
+
     if(!id) return response.status(404).send('Not Found')
 
     const profile = await Ambulance.getUser(id)
 
-    if(!profile) 
+    if(!profile)
         return response.status(404).json({
             'result': 'Failure',
             'msg': 'Profile Not Found'

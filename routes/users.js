@@ -9,10 +9,11 @@ const {
 	signAccessToken,
 	signRefreshToken,
 } = require("../helpers/generate.tokens");
-
 const userRouter = Router();
 
+
 userRouter.post("/", async (req, res) => {
+	 // #swagger.tags = ['Users']
 	if (!req.body)
 		return res.status(404).send({
 			result: "Failure",
@@ -62,6 +63,7 @@ userRouter.post("/", async (req, res) => {
 });
 
 userRouter.post("/add", auth, authRole(ROLES.ADMIN), async (req, res) => {
+	// #swagger.tags = ['Users']
 	if (!req.body)
 		return res.status(404).send({
 			result: "Failure",
@@ -101,6 +103,7 @@ userRouter.post("/add", auth, authRole(ROLES.ADMIN), async (req, res) => {
 });
 
 userRouter.post("/login", async function (req, res) {
+	// #swagger.tags = ['Users']
 	const { username, password } = req.body;
 
 	try {
@@ -160,6 +163,7 @@ const authProfileViewer = async (req, res, next) => {
 };
 
 userRouter.get("/:id", auth, authProfileViewer, async (req, res) => {
+	// #swagger.tags = ['Users']
 	const { id } = req.params;
 
 	if (!id) return res.status(404).send("Not Found");
@@ -194,6 +198,7 @@ userRouter.get(
 	authRole(ROLES.ADMIN),
 	paginate(User),
 	async (req, res) => {
+		// #swagger.tags = ['Users']
 		const {
 			total,
 			paginatedDocs: { next = 0 },
@@ -241,6 +246,7 @@ const authUpdateUser = async (req, res, next) => {
 };
 
 userRouter.put("/:id", auth, authUpdateUser, async (req, res) => {
+	// #swagger.tags = ['Users']
 	const { id } = req.params;
 
 	if (!id) return res.status(500).send("Missing ID");
@@ -275,6 +281,7 @@ userRouter.put("/:id", auth, authUpdateUser, async (req, res) => {
 });
 
 userRouter.delete("/:id", auth, authRole(ROLES.ADMIN), async (req, res) => {
+	// #swagger.tags = ['Users']
 	const id = req.params.id;
 
 	const { user } = req.user;
@@ -306,6 +313,7 @@ userRouter.delete("/:id", auth, authRole(ROLES.ADMIN), async (req, res) => {
 });
 
 userRouter.post("/logout", auth, async (req, res) => {
+	// #swagger.tags = ['Users']
 	try {
 		req.user.tokens = req.user.tokens.filter(
 			(token) => token.token != req.token
@@ -318,6 +326,7 @@ userRouter.post("/logout", auth, async (req, res) => {
 });
 
 userRouter.post("/logout-all", auth, async (req, res) => {
+	// #swagger.tags = ['Users']
 	try {
 		req.user.tokens.splice(0, (token) => req.user.tokens.length);
 		await req.user.save();
