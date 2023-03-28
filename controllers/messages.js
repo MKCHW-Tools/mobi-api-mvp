@@ -5,13 +5,14 @@ const {
 	updateLatestMessage,
 	getAllMessages: getAllChatMessages,
 } = require("../services/messageService");
+const {uploadImage} = require("../helpers/storage");
 
 module.exports = {
 	sendMessage: asyncHandler(async (req, res) => {
 		const { content, chatId, image } = req.body;
 		console.log("Request Body", req.body);
 
-		if (!content || !chatId) {
+		if ((!content && !image) || !chatId) {
 			console.log("Invalid data passed into request");
 			return res.sendStatus(400);
 		}
@@ -21,7 +22,7 @@ module.exports = {
 					sender: req.user._id,
 					content: content,
 					chat: chatId,
-					image: image,
+					image: await uploadImage(new Buffer(image, 'base64'), "for-chat/"),
 			  }
 			: {
 					sender: req.user._id,

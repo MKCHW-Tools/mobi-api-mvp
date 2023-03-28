@@ -12,3 +12,4 @@ models/expense.js
 models/note.js
 models/saving.js
 models/loan.js
+mobiklinic-service-account-key.json

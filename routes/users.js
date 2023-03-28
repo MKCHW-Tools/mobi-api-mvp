@@ -19,36 +19,46 @@ userRouter.post("/", async (req, res) => {
 			msg: "Missing data",
 		});
 
-	if (req.body.password)
-		req.body.password = await bcrypt.hash(req.body.password, 8);
-	const { username: uname } = req.body;
+	try {
+		if (req.body.password)
+			req.body.password = await bcrypt.hash(req.body.password, 8);
+		const { username: uname } = req.body;
 
-	accessToken = await signAccessToken({ uname });
-	refreshToken = await signRefreshToken({ uname });
+		accessToken = await signAccessToken({ uname });
+		refreshToken = await signRefreshToken({ uname });
 
-	req.body.accessToken = accessToken;
-	req.body.refreshToken = refreshToken;
+		req.body.accessToken = accessToken;
+		req.body.refreshToken = refreshToken;
 
-	const user = new User(req.body);
-	console.log(user, "User");
-	await user.save();
+		const user = new User(req.body);
+		await user.save();
 
-	const { createdAt, _id, username, name, email, phone, roles } = user;
-
-	res.status(200).send({
-		result: "Success",
-		user: {
-			createdAt,
-			_id,
-			username,
-			name,
-			email,
-			phone,
-			roles,
-		},
-		accessToken: accessToken,
-		refreshToken: refreshToken,
-	});
+		const { createdAt, _id, username, name, email, phone, roles } = user;
+		roles?.length <= 0 ? roles.push("chp") : roles;
+		res.status(200).send({
+			result: "Success",
+			user: {
+				createdAt,
+				_id,
+				username,
+				name,
+				email,
+				phone,
+				roles,
+			},
+			accessToken: accessToken,
+			refreshToken: refreshToken,
+		});
+	} catch (error) {
+		console.error(error.message);
+		console.log(req.body);
+		res.status(401).send({
+			result: "Failure",
+			msg: "Registration failed",
+			devError: error.message,
+			payload: req.body,
+		});
+	}
 });
 
 userRouter.post("/add", auth, authRole(ROLES.ADMIN), async (req, res) => {
@@ -121,6 +131,7 @@ userRouter.post("/login", async function (req, res) {
 		if (updated._id)
 			return res.status(200).send({
 				result: "Success",
+				id: updated._id,
 				accessToken,
 				refreshToken,
 			});
